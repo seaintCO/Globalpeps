@@ -456,3 +456,204 @@ function pepsBuildPriceMessage(items) {
   cleanRenderCart();
   fixNavLabels();
 })();
+
+
+
+// ---- V12 human order routing + package-first pricing ----
+(() => {
+  const ORDER_NUMBER = "3054491784";
+  const ORDER_DISPLAY = "305-449-1784";
+  const HUMAN_NUMBER = "3053157577";
+  const HUMAN_DISPLAY = "305-315-7577";
+  const GLOBAL_EMAIL = "Globalpepsorg@gmail.com";
+  const PRICE_ITEMS = [{"category": "Bacteriostatic Water", "sku": "WA3", "product": "Bac.water", "mg": "3ml", "vials": "10 Vials", "base": 77, "price": 97}, {"category": "Bacteriostatic Water", "sku": "WA10", "product": "Bac.water", "mg": "10ml", "vials": "10 Vials", "base": 83, "price": 103}, {"category": "Tirzepatide", "sku": "TRS", "product": "Tirzepatide", "mg": "5mg", "vials": "10 Vials", "base": 137, "price": 157}, {"category": "Tirzepatide", "sku": "TR10", "product": "Tirzepatide", "mg": "10mg", "vials": "10 Vials", "base": 224, "price": 244}, {"category": "Tirzepatide", "sku": "TR15", "product": "Tirzepatide", "mg": "15mg", "vials": "10 Vials", "base": 296, "price": 316}, {"category": "Tirzepatide", "sku": "TR20", "product": "Tirzepatide", "mg": "20mg", "vials": "10 Vials", "base": 377, "price": 397}, {"category": "Tirzepatide", "sku": "TR30", "product": "Tirzepatide", "mg": "30mg", "vials": "10 Vials", "base": 479, "price": 499}, {"category": "Tirzepatide", "sku": "TR40", "product": "Tirzepatide", "mg": "40mg", "vials": "10 Vials", "base": 599, "price": 619}, {"category": "Tirzepatide", "sku": "TR50", "product": "Tirzepatide", "mg": "50mg", "vials": "10 Vials", "base": 701, "price": 721}, {"category": "Tirzepatide", "sku": "TR60", "product": "Tirzepatide", "mg": "60mg", "vials": "10 Vials", "base": 803, "price": 823}, {"category": "Tirzepatide", "sku": "TR100", "product": "Tirzepatide", "mg": "100mg", "vials": "10 Vials", "base": 1220, "price": 1240}, {"category": "Semaglutide", "sku": "SM10", "product": "Semaglutide", "mg": "10mg", "vials": "10 Vials", "base": 221, "price": 241}, {"category": "Semaglutide", "sku": "SM20", "product": "Semaglutide", "mg": "20mg", "vials": "10 Vials", "base": 308, "price": 328}, {"category": "BPC 157", "sku": "BC5", "product": "BPC 157", "mg": "5mg", "vials": "10 Vials", "base": 146, "price": 166}, {"category": "BPC 157", "sku": "BC10", "product": "BPC 157", "mg": "10mg", "vials": "10 Vials", "base": 194, "price": 214}, {"category": "BPC 157", "sku": "BB10", "product": "BPC 157 + TB500", "mg": "BPC 5mg + TB 5mg / 10mg", "vials": "10 Vials", "base": 365, "price": 385}, {"category": "BPC 157", "sku": "BB20", "product": "BPC 157 + TB500", "mg": "BPC 10mg + TB 10mg / 20mg", "vials": "10 Vials", "base": 650, "price": 670}, {"category": "TB500", "sku": "BT5", "product": "TB500", "mg": "5mg", "vials": "10 Vials", "base": 335, "price": 355}, {"category": "TB500", "sku": "BT10", "product": "TB500", "mg": "10mg", "vials": "10 Vials", "base": 563, "price": 583}, {"category": "CJC 1295 + Ipamorelin / Blends", "sku": "CP10", "product": "CJC 1295 no DAC + Ipamorelin", "mg": "10mg", "vials": "10 Vials", "base": 353, "price": 373}, {"category": "CJC 1295 + Ipamorelin / Blends", "sku": "CD5", "product": "CJC1295 with DAC", "mg": "5mg", "vials": "10 Vials", "base": 632, "price": 652}, {"category": "CJC 1295 + Ipamorelin / Blends", "sku": "CD10", "product": "CJC1295 with DAC", "mg": "10mg", "vials": "10 Vials", "base": 794, "price": 814}, {"category": "CJC 1295 + Ipamorelin / Blends", "sku": "CND5", "product": "CJC 1295 without DAC", "mg": "5mg", "vials": "10 Vials", "base": 242, "price": 262}, {"category": "CJC 1295 + Ipamorelin / Blends", "sku": "CND10", "product": "CJC 1295 without DAC", "mg": "10mg", "vials": "10 Vials", "base": 458, "price": 478}, {"category": "CJC 1295 + Ipamorelin / Blends", "sku": "IP5", "product": "Ipamorelin", "mg": "5mg", "vials": "10 Vials", "base": 146, "price": 166}, {"category": "CJC 1295 + Ipamorelin / Blends", "sku": "IP10", "product": "Ipamorelin", "mg": "10mg", "vials": "10 Vials", "base": 218, "price": 238}, {"category": "Retatrutide", "sku": "RT5", "product": "Retatrutide", "mg": "5mg", "vials": "10 Vials", "base": 170, "price": 190}, {"category": "Retatrutide", "sku": "RT10", "product": "Retatrutide", "mg": "10mg", "vials": "10 Vials", "base": 272, "price": 292}, {"category": "Retatrutide", "sku": "RT15", "product": "Retatrutide", "mg": "15mg", "vials": "10 Vials", "base": 368, "price": 388}, {"category": "Retatrutide", "sku": "RT20", "product": "Retatrutide", "mg": "20mg", "vials": "10 Vials", "base": 464, "price": 484}, {"category": "Retatrutide", "sku": "RT30", "product": "Retatrutide", "mg": "30mg", "vials": "10 Vials", "base": 638, "price": 658}, {"category": "Retatrutide", "sku": "RT40", "product": "Retatrutide", "mg": "40mg", "vials": "10 Vials", "base": 797, "price": 817}, {"category": "Retatrutide", "sku": "RT50", "product": "Retatrutide", "mg": "50mg", "vials": "10 Vials", "base": 938, "price": 958}, {"category": "Retatrutide", "sku": "RT60", "product": "Retatrutide", "mg": "60mg", "vials": "10 Vials", "base": 1082, "price": 1102}, {"category": "GHK-Cu", "sku": "CU50", "product": "GHK-Cu", "mg": "50mg", "vials": "10 Vials", "base": 128, "price": 148}, {"category": "GHK-Cu", "sku": "CU100", "product": "GHK-Cu", "mg": "100mg", "vials": "10 Vials", "base": 161, "price": 181}, {"category": "Sermorelin", "sku": "SMO5", "product": "Sermorelin", "mg": "5mg", "vials": "10 Vials", "base": 272, "price": 292}, {"category": "Sermorelin", "sku": "SMO10", "product": "Sermorelin", "mg": "10mg", "vials": "10 Vials", "base": 488, "price": 508}, {"category": "Tesamorelin", "sku": "TSM5", "product": "Tesamorelin", "mg": "5mg", "vials": "10 Vials", "base": 401, "price": 421}, {"category": "Tesamorelin", "sku": "TSM10", "product": "Tesamorelin", "mg": "10mg", "vials": "10 Vials", "base": 692, "price": 712}, {"category": "Tesamorelin", "sku": "TSM20", "product": "Tesamorelin", "mg": "20mg", "vials": "10 Vials", "base": 1163, "price": 1183}, {"category": "NAD+", "sku": "NJ100", "product": "NAD+", "mg": "100mg", "vials": "10 Vials", "base": 146, "price": 166}, {"category": "NAD+", "sku": "NJ500", "product": "NAD+", "mg": "500mg", "vials": "10 Vials", "base": 203, "price": 223}, {"category": "NAD+", "sku": "NJ1000", "product": "NAD+", "mg": "1000mg", "vials": "10 Vials", "base": 260, "price": 280}, {"category": "KLOW / GLOW", "sku": "GLOW70", "product": "GLOW", "mg": "70mg", "vials": "10 Vials", "base": 692, "price": 712}, {"category": "KLOW / GLOW", "sku": "KLOW80", "product": "KLOW", "mg": "80mg", "vials": "10 Vials", "base": 875, "price": 895}, {"category": "IGF-1 LR3", "sku": "IG1", "product": "IGF-1 LR3", "mg": "1mg", "vials": "10 Vials", "base": 737, "price": 757}, {"category": "MOTS-c", "sku": "MS10", "product": "MOTS-c", "mg": "10mg", "vials": "10 Vials", "base": 263, "price": 283}, {"category": "MOTS-c", "sku": "MS20", "product": "MOTS-c", "mg": "20mg", "vials": "10 Vials", "base": 431, "price": 451}, {"category": "MOTS-c", "sku": "MS40", "product": "MOTS-c", "mg": "40mg", "vials": "10 Vials", "base": 755, "price": 775}, {"category": "Epithalon", "sku": "ET10", "product": "Epithalon", "mg": "10mg", "vials": "10 Vials", "base": 152, "price": 172}, {"category": "Epithalon", "sku": "ET50", "product": "Epithalon", "mg": "50mg", "vials": "10 Vials", "base": 527, "price": 547}, {"category": "Cagrilintide", "sku": "CGL5", "product": "Cagrilintide", "mg": "5mg", "vials": "10 Vials", "base": 479, "price": 499}, {"category": "Cagrilintide", "sku": "CGL10", "product": "Cagrilintide", "mg": "10mg", "vials": "10 Vials", "base": 770, "price": 790}, {"category": "5-AMINO-1MQ", "sku": "5AM", "product": "5-AMINO-1MQ", "mg": "5mg", "vials": "10 Vials", "base": 83, "price": 103}, {"category": "5-AMINO-1MQ", "sku": "10AM", "product": "5-AMINO-1MQ", "mg": "10mg", "vials": "10 Vials", "base": 161, "price": 181}];
+  const $ = (s,c=document)=>c.querySelector(s), $$=(s,c=document)=>Array.from(c.querySelectorAll(s));
+  const money = n => "$" + Number(n || 0).toLocaleString();
+  const sms = (phone, body) => "sms:" + phone + "?&body=" + encodeURIComponent(body);
+
+  const variants = {
+    "wolverine":[{label:"10 Vials", size:"10MG", price:385},{label:"10 Vials", size:"20MG", price:670}],
+    "cjc-ipamorelin":[{label:"10 Vials", size:"10MG", price:373}],
+    "bpc-157":[{label:"10 Vials", size:"5MG", price:166},{label:"10 Vials", size:"10MG", price:214}],
+    "ghk-cu":[{label:"10 Vials", size:"50MG", price:148},{label:"10 Vials", size:"100MG", price:181}],
+    "glow":[{label:"10 Vials", size:"70MG", price:712},{label:"10 Vials", size:"80MG", price:895}],
+    "mots-c":[{label:"10 Vials", size:"10MG", price:283},{label:"10 Vials", size:"20MG", price:451},{label:"10 Vials", size:"40MG", price:775}],
+    "epithalon":[{label:"10 Vials", size:"10MG", price:172},{label:"10 Vials", size:"50MG", price:547}],
+    "cjc-1295":[{label:"10 Vials", size:"5MG", price:652},{label:"10 Vials", size:"10MG", price:814}],
+    "5-amino-1mq":[{label:"10 Vials", size:"5MG", price:103},{label:"10 Vials", size:"10MG", price:181}],
+    "tesamorelin":[{label:"10 Vials", size:"5MG", price:421},{label:"10 Vials", size:"10MG", price:712},{label:"10 Vials", size:"20MG", price:1183}],
+    "enclomiphene":[{label:"10 Vials", size:"12.5MG", price:null}],
+    "mk-677":[{label:"10 Vials", size:"25MG", price:null}],
+    "mt-2":[{label:"10 Vials", size:"10MG", price:null}]
+  };
+
+  function getCartSafe() {
+    try { return JSON.parse(localStorage.getItem("peps_cart") || localStorage.getItem("wop_cart") || "[]"); }
+    catch(e) { return []; }
+  }
+  function saveCartSafe(cart) {
+    localStorage.setItem("peps_cart", JSON.stringify(cart));
+    localStorage.setItem("wop_cart", JSON.stringify(cart));
+  }
+
+  function buildOrderMessage(items) {
+    const lines = [
+      "Hi PEPS GLOBAL, I want to request a research-use-only order.",
+      "",
+      "Please have a HUMAN sales rep review this order. No AI / no chatbot.",
+      "",
+      "Selected items:"
+    ];
+    let total = 0;
+    items.forEach(x => {
+      const qty = Number(x.qty || 1);
+      const unit = Number(x.selectedPrice || x.price || 0);
+      const label = x.vials || x.label || "10 Vials";
+      const mg = x.mg || x.size || "";
+      if (unit) total += unit * qty;
+      lines.push("- " + (x.sku ? x.sku + " | " : "") + (x.product || x.name || "Product") + " | " + label + " | " + mg + " | Qty " + qty + (unit ? " | " + money(unit * qty) : ""));
+    });
+    if (total) lines.push("", "Estimated total: " + money(total));
+    lines.push("", "Please confirm availability, COA documentation, shipping, and send the payment link.");
+    lines.push("Research use only. Not for human or veterinary use.");
+    lines.push("Email: " + GLOBAL_EMAIL);
+    return lines.join("\n");
+  }
+
+  function cleanDrawer() {
+    const drawer = $(".cart-drawer");
+    if (!drawer) return;
+    const cart = getCartSafe();
+    $$(".cart-count").forEach(x => x.textContent = cart.reduce((a,b)=>a+(Number(b.qty)||1),0));
+    const box = $("[data-cart-items]");
+    if (box) {
+      box.innerHTML = cart.length ? cart.map((x,i) => {
+        const qty = Number(x.qty || 1);
+        const unit = Number(x.selectedPrice || x.price || 0);
+        const label = x.vials || x.label || "10 Vials";
+        const mg = x.mg || x.size || "";
+        return `<article class="drawer-item-clean">
+          <div class="drawer-item-top"><strong>${x.product || x.name || "Product"}</strong><button type="button" data-v12-remove="${i}">×</button></div>
+          <div class="drawer-meta"><span class="drawer-vials">${label}</span><span>${mg}</span><span>Qty: ${qty}</span>${unit ? `<span>${money(unit)} each</span><span>${money(unit*qty)} line</span>` : ""}</div>
+        </article>`;
+      }).join("") : `<div class="drawer-empty">Your quote list is empty.</div>`;
+    }
+    Array.from(drawer.children).forEach(el => {
+      if (el.classList?.contains("drawer-actions-v11") || el.classList?.contains("drawer-actions-v12")) el.remove();
+      if (el.matches?.("a.btn")) el.remove();
+    });
+    const actions = document.createElement("div");
+    actions.className = "drawer-actions-v12";
+    actions.innerHTML = `
+      <a class="btn black full" href="${sms(ORDER_NUMBER, cart.length ? buildOrderMessage(cart) : "Hi PEPS GLOBAL, I want to place a research-use-only order. Please connect me with a human sales rep and send instructions.")}">TEXT ORDER TO HUMAN SALES REP</a>
+      <a class="btn outline full" href="${sms(HUMAN_NUMBER, "Hi PEPS GLOBAL, I want to talk to a human global agent in English or Spanish.")}">TALK TO HUMAN GLOBAL AGENT EN/ES</a>
+      <a class="btn outline full" href="mailto:${GLOBAL_EMAIL}?subject=PEPS%20GLOBAL%20Inquiry">EMAIL INQUIRY</a>
+    `;
+    drawer.appendChild(actions);
+    $$("[data-v12-remove]").forEach(btn => btn.onclick = () => {
+      const c = getCartSafe();
+      c.splice(Number(btn.dataset.v12Remove),1);
+      saveCartSafe(c);
+      cleanDrawer();
+    });
+  }
+
+  function setupProductPage() {
+    if (!$("[data-product-page]") || typeof PRODUCTS === "undefined") return;
+    const slug = new URLSearchParams(location.search).get("item") || "bpc-157";
+    const p = PRODUCTS.find(x => x.slug === slug) || PRODUCTS[0];
+    const row = $(".size-row");
+    if (!row) return;
+    const list = variants[p.slug] || [{label:"10 Vials", size:p.size || "5MG", price:null}];
+    let chosen = list[0];
+    function select(v) {
+      chosen = v;
+      $$(".size-row .size").forEach(b => {
+        const active = b.dataset.size === v.size;
+        b.classList.toggle("active", active);
+        b.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+      const price = $("[data-product-price]");
+      if (price) price.textContent = v.price ? money(v.price) : (p.price || "Text for pricing");
+      let note = $(".selected-size-note");
+      if (!note) {
+        note = document.createElement("p");
+        note.className = "selected-size-note";
+        row.insertAdjacentElement("afterend", note);
+      }
+      note.innerHTML = `<strong>${v.label}</strong> package • <strong>${v.size}</strong> strength${v.price ? " • " + money(v.price) : ""}`;
+      const productText = $("[data-text-product]");
+      if (productText) {
+        productText.href = sms(ORDER_NUMBER, `Hi PEPS GLOBAL, I am interested in ${p.name} | ${v.label} | ${v.size}${v.price ? " | " + money(v.price) : ""}. Please have a human sales rep confirm availability, COA documentation, shipping, and payment link. Research use only.`);
+      }
+    }
+    row.innerHTML = list.map((v,i)=>`<button class="size ${i===0?"active":""}" type="button" data-size="${v.size}" aria-pressed="${i===0?"true":"false"}"><span class="size-vials">${v.label}</span><span class="size-mg">${v.size}</span></button>`).join("");
+    row.querySelectorAll(".size").forEach((b,i)=>b.onclick = () => select(list[i]));
+    select(chosen);
+    const q = $("[data-qty]");
+    $$("[data-add-cart],[data-add-quote]").forEach(btn => btn.onclick = e => {
+      e.preventDefault();
+      const cart = getCartSafe();
+      cart.push({...p, product:p.name, vials:chosen.label, mg:chosen.size, size:chosen.size, selectedPrice:chosen.price || null, price:chosen.price || p.price, qty:Number(q?.value || 1) || 1});
+      saveCartSafe(cart);
+      cleanDrawer();
+      $(".cart-drawer")?.classList.add("open");
+    });
+  }
+
+  function setupPriceList() {
+    const table = $("[data-price-table]");
+    const selectedBox = $("[data-selected-prices]");
+    const totalEl = $("[data-price-total]");
+    const textLink = $("[data-price-text]");
+    if (!table || !selectedBox || !totalEl || !textLink) return;
+    let selected = [];
+    function render() {
+      selectedBox.innerHTML = selected.length ? selected.map((x,i)=>`<div class="selected-row"><span><strong>${x.sku}</strong><small>${x.product} • ${x.vials} • ${x.mg}</small></span><b>${money(x.price)}</b><button type="button" data-v12-price-remove="${i}">×</button></div>`).join("") : "<p>No items selected yet.</p>";
+      totalEl.textContent = money(selected.reduce((s,x)=>s+Number(x.price || 0),0));
+      textLink.textContent = "Text Selected Order to Human Sales Rep";
+      textLink.href = sms(ORDER_NUMBER, selected.length ? buildOrderMessage(selected.map(x=>({...x, qty:1, selectedPrice:x.price}))) : "Hi PEPS GLOBAL, I want to place a research-use-only order. Please send instructions and payment link.");
+      $$("[data-v12-price-remove]").forEach(btn => btn.onclick = () => {
+        selected.splice(Number(btn.dataset.v12PriceRemove),1);
+        render();
+      });
+    }
+    table.addEventListener("click", e => {
+      const btn = e.target.closest("[data-price-add]");
+      if (!btn) return;
+      const item = PRICE_ITEMS.find(x => x.sku === btn.dataset.sku);
+      if (item) {
+        selected.push(item);
+        render();
+      }
+    });
+    const search = $("[data-price-search]");
+    const cat = $("[data-category-filter]");
+    function filter() {
+      const q = (search?.value || "").toLowerCase();
+      const c = cat?.value || "all";
+      table.querySelectorAll("tr").forEach(row => {
+        row.style.display = ((!q || row.dataset.name.includes(q)) && (c === "all" || row.dataset.category === c)) ? "" : "none";
+      });
+    }
+    search?.addEventListener("input", filter);
+    cat?.addEventListener("change", filter);
+    render();
+  }
+
+  function addHumanBadges() {
+    const target = $(".product-info");
+    if (target && !$(".human-product-note")) {
+      const div = document.createElement("div");
+      div.className = "human-product-note";
+      div.innerHTML = `<strong>Human-reviewed ordering only.</strong><br>Primary orders: <a href="${sms(ORDER_NUMBER, "Hi PEPS GLOBAL, I want to place a research-use-only order. Please connect me with a human sales rep.")}">${ORDER_DISPLAY}</a> · Human Global Agent EN/ES: <a href="${sms(HUMAN_NUMBER, "Hi PEPS GLOBAL, I want to talk to a human global agent in English or Spanish.")}">${HUMAN_DISPLAY}</a> · <a href="mailto:${GLOBAL_EMAIL}">${GLOBAL_EMAIL}</a>`;
+      target.appendChild(div);
+    }
+  }
+
+  setupProductPage();
+  setupPriceList();
+  cleanDrawer();
+  addHumanBadges();
+  document.addEventListener("click", () => setTimeout(cleanDrawer, 30));
+})();

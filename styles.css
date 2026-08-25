@@ -374,3 +374,20 @@
   .product-actions{grid-template-columns:1fr}
   .cart-drawer{padding:22px}
 }
+
+/* V12 human order + vials-first display */
+.human-order-banner{width:min(94%,1450px);margin:45px auto 70px;border:1px solid var(--line);border-radius:22px;background:#fafafa;padding:34px;display:grid;grid-template-columns:1fr auto;gap:26px;align-items:center}
+.human-order-banner h2{font-family:'Libre Baskerville',serif;font-size:34px;line-height:1.08;margin:10px 0}
+.human-order-banner p{color:#666;line-height:1.6;max-width:760px}.human-actions{display:grid;gap:10px;min-width:320px}.human-actions .btn{text-align:center}
+.size-row .size{display:grid;gap:4px;min-width:118px;padding:12px 16px}
+.size-vials{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.size-mg{font-size:15px}
+.selected-size-note{font-size:14px;color:#444;margin:12px 0 0}
+.human-product-note{margin-top:18px;border:1px solid var(--line);border-radius:14px;background:#fafafa;padding:15px;color:#555;line-height:1.6}.human-product-note a{text-decoration:underline}
+.v12-pricing-table th:nth-child(3),.v12-pricing-table td:nth-child(3),.v12-pricing-table th:nth-child(4),.v12-pricing-table td:nth-child(4){text-align:center}
+.vials-pill,.mg-pill{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:7px 12px;font-weight:800;white-space:nowrap}
+.vials-pill{background:#111;color:#fff}.mg-pill{background:#f3f3f0;border:1px solid var(--line);color:#111}
+.drawer-vials{background:#111!important;color:#fff!important;border-color:#111!important;font-weight:700}
+.drawer-actions-v12{display:grid;gap:10px;margin-top:auto;padding-top:18px;border-top:1px solid var(--line)}
+.drawer-actions-v12 .btn{text-align:center}
+.selected-row small{display:block;color:#777;margin-top:4px;line-height:1.35}
+@media(max-width:950px){.human-order-banner{grid-template-columns:1fr}.human-actions{min-width:0}.human-order-banner h2{font-size:28px}}

@@ -78,3 +78,11 @@ Updated visuals include BPC-157, GHK-Cu, CJC-1295/Ipamorelin, Wolverine, Glow, M
 - Quote drawer cleaned up with one clear Text Selected Items button and one Continue Shopping button.
 - Removed overlapping/duplicate quote buttons from older versions.
 - Fixed top navigation label issue where Sell Your Own could display as About.
+
+## V12 fixes
+- Pricing/package display now emphasizes Vials first, then MG.
+- Primary order/sales rep number remains 305-449-1784.
+- Added human Global Agent in English/Spanish: 305-315-7577.
+- Added email inquiry: Globalpepsorg@gmail.com.
+- Emphasized every order goes through a human sales rep, not AI/chatbot.
+- Updated SMS order messages to request human sales rep review.

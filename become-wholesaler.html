@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Become a Wholesaler — PEPS GLOBAL</title>
-<link rel="stylesheet" href="styles.css?v=11">
+<link rel="stylesheet" href="styles.css?v=12">
 </head><body>
 <div class="announcement">RESEARCH USE ONLY — NOT FOR HUMAN OR VETERINARY USE</div>
 <header class="site-header">
@@ -67,10 +67,11 @@
     <div>
       <span class="eyebrow">CURRENT CATALOG PRICING</span>
       <h2>Research Wholesale Price List</h2>
-      <p>Displayed pricing includes the added <strong>$20</strong> margin on top of the provided base price. Customers can add items and text the selected order to <strong>305-449-1784</strong>.</p>
+      <p>Organized by package first: <strong>Vials</strong>, then <strong>MG strength</strong>. Displayed pricing includes the added <strong>$20</strong> margin.</p>
+      <p><strong>Orders:</strong> text 305-449-1784. <strong>Human Global Agent EN/ES:</strong> 305-315-7577. <strong>Email:</strong> Globalpepsorg@gmail.com.</p>
     </div>
     <div class="price-tools">
-      <input data-price-search placeholder="Search peptide, SKU, or size">
+      <input data-price-search placeholder="Search peptide, SKU, or MG">
       <select data-category-filter>
         <option value="all">All Categories</option>
         <option value="5-AMINO-1MQ">5-AMINO-1MQ</option>
@@ -96,177 +97,459 @@
 
   <div class="pricing-layout">
     <div class="price-table-wrap">
-      <table class="pricing-table">
-        <thead><tr><th>SKU</th><th>Product</th><th>Price</th><th></th></tr></thead>
-        <tbody data-price-table><tr data-category="Bacteriostatic Water" data-name="wa3 bac.water 3ml * 10 vials">
-<td><strong>WA3</strong></td><td>Bac.water 3ml * 10 Vials</td><td>$97</td><td><button class="btn black small" type="button" data-price-add data-sku="WA3">Add</button></td>
+      <table class="pricing-table v12-pricing-table">
+<thead><tr><th>SKU</th><th>Product</th><th>Vials</th><th>MG</th><th>Price</th><th></th></tr></thead>
+<tbody data-price-table>
+<tr data-category="Bacteriostatic Water" data-name="wa3 bac.water 3ml">
+<td><strong>WA3</strong></td>
+<td>Bac.water</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">3ML</span></td>
+<td><strong>$97</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="WA3">Add</button></td>
 </tr>
-<tr data-category="Bacteriostatic Water" data-name="wa10 bac.water 10ml * 10 vials">
-<td><strong>WA10</strong></td><td>Bac.water 10ml * 10 Vials</td><td>$103</td><td><button class="btn black small" type="button" data-price-add data-sku="WA10">Add</button></td>
+<tr data-category="Bacteriostatic Water" data-name="wa10 bac.water 10ml">
+<td><strong>WA10</strong></td>
+<td>Bac.water</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10ML</span></td>
+<td><strong>$103</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="WA10">Add</button></td>
 </tr>
-<tr data-category="Tirzepatide" data-name="trs tirzepatide 5mg * 10 vials">
-<td><strong>TRS</strong></td><td>Tirzepatide 5mg * 10 Vials</td><td>$157</td><td><button class="btn black small" type="button" data-price-add data-sku="TRS">Add</button></td>
+<tr data-category="Tirzepatide" data-name="trs tirzepatide 5mg">
+<td><strong>TRS</strong></td>
+<td>Tirzepatide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">5MG</span></td>
+<td><strong>$157</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="TRS">Add</button></td>
 </tr>
-<tr data-category="Tirzepatide" data-name="tr10 tirzepatide 10mg * 10 vials">
-<td><strong>TR10</strong></td><td>Tirzepatide 10mg * 10 Vials</td><td>$244</td><td><button class="btn black small" type="button" data-price-add data-sku="TR10">Add</button></td>
+<tr data-category="Tirzepatide" data-name="tr10 tirzepatide 10mg">
+<td><strong>TR10</strong></td>
+<td>Tirzepatide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10MG</span></td>
+<td><strong>$244</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="TR10">Add</button></td>
 </tr>
-<tr data-category="Tirzepatide" data-name="tr15 tirzepatide 15mg * 10 vials">
-<td><strong>TR15</strong></td><td>Tirzepatide 15mg * 10 Vials</td><td>$316</td><td><button class="btn black small" type="button" data-price-add data-sku="TR15">Add</button></td>
+<tr data-category="Tirzepatide" data-name="tr15 tirzepatide 15mg">
+<td><strong>TR15</strong></td>
+<td>Tirzepatide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">15MG</span></td>
+<td><strong>$316</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="TR15">Add</button></td>
 </tr>
-<tr data-category="Tirzepatide" data-name="tr20 tirzepatide 20mg * 10 vials">
-<td><strong>TR20</strong></td><td>Tirzepatide 20mg * 10 Vials</td><td>$397</td><td><button class="btn black small" type="button" data-price-add data-sku="TR20">Add</button></td>
+<tr data-category="Tirzepatide" data-name="tr20 tirzepatide 20mg">
+<td><strong>TR20</strong></td>
+<td>Tirzepatide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">20MG</span></td>
+<td><strong>$397</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="TR20">Add</button></td>
 </tr>
-<tr data-category="Tirzepatide" data-name="tr30 tirzepatide 30mg * 10 vials">
-<td><strong>TR30</strong></td><td>Tirzepatide 30mg * 10 Vials</td><td>$499</td><td><button class="btn black small" type="button" data-price-add data-sku="TR30">Add</button></td>
+<tr data-category="Tirzepatide" data-name="tr30 tirzepatide 30mg">
+<td><strong>TR30</strong></td>
+<td>Tirzepatide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">30MG</span></td>
+<td><strong>$499</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="TR30">Add</button></td>
 </tr>
-<tr data-category="Tirzepatide" data-name="tr40 tirzepatide 40mg * 10 vials">
-<td><strong>TR40</strong></td><td>Tirzepatide 40mg * 10 Vials</td><td>$619</td><td><button class="btn black small" type="button" data-price-add data-sku="TR40">Add</button></td>
+<tr data-category="Tirzepatide" data-name="tr40 tirzepatide 40mg">
+<td><strong>TR40</strong></td>
+<td>Tirzepatide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">40MG</span></td>
+<td><strong>$619</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="TR40">Add</button></td>
 </tr>
-<tr data-category="Tirzepatide" data-name="tr50 tirzepatide 50mg * 10 vials">
-<td><strong>TR50</strong></td><td>Tirzepatide 50mg * 10 Vials</td><td>$721</td><td><button class="btn black small" type="button" data-price-add data-sku="TR50">Add</button></td>
+<tr data-category="Tirzepatide" data-name="tr50 tirzepatide 50mg">
+<td><strong>TR50</strong></td>
+<td>Tirzepatide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">50MG</span></td>
+<td><strong>$721</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="TR50">Add</button></td>
 </tr>
-<tr data-category="Tirzepatide" data-name="tr60 tirzepatide 60mg * 10 vials">
-<td><strong>TR60</strong></td><td>Tirzepatide 60mg * 10 Vials</td><td>$823</td><td><button class="btn black small" type="button" data-price-add data-sku="TR60">Add</button></td>
+<tr data-category="Tirzepatide" data-name="tr60 tirzepatide 60mg">
+<td><strong>TR60</strong></td>
+<td>Tirzepatide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">60MG</span></td>
+<td><strong>$823</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="TR60">Add</button></td>
 </tr>
-<tr data-category="Tirzepatide" data-name="tr100 tirzepatide 100mg * 10 vials">
-<td><strong>TR100</strong></td><td>Tirzepatide 100mg * 10 Vials</td><td>$1,240</td><td><button class="btn black small" type="button" data-price-add data-sku="TR100">Add</button></td>
+<tr data-category="Tirzepatide" data-name="tr100 tirzepatide 100mg">
+<td><strong>TR100</strong></td>
+<td>Tirzepatide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">100MG</span></td>
+<td><strong>$1,240</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="TR100">Add</button></td>
 </tr>
-<tr data-category="Semaglutide" data-name="sm10 semaglutide 10mg * 10 vials">
-<td><strong>SM10</strong></td><td>Semaglutide 10mg * 10 Vials</td><td>$241</td><td><button class="btn black small" type="button" data-price-add data-sku="SM10">Add</button></td>
+<tr data-category="Semaglutide" data-name="sm10 semaglutide 10mg">
+<td><strong>SM10</strong></td>
+<td>Semaglutide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10MG</span></td>
+<td><strong>$241</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="SM10">Add</button></td>
 </tr>
-<tr data-category="Semaglutide" data-name="sm20 semaglutide 20mg * 10 vials">
-<td><strong>SM20</strong></td><td>Semaglutide 20mg * 10 Vials</td><td>$328</td><td><button class="btn black small" type="button" data-price-add data-sku="SM20">Add</button></td>
+<tr data-category="Semaglutide" data-name="sm20 semaglutide 20mg">
+<td><strong>SM20</strong></td>
+<td>Semaglutide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">20MG</span></td>
+<td><strong>$328</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="SM20">Add</button></td>
 </tr>
-<tr data-category="BPC 157" data-name="bc5 bpc 157 5mg * 10 vials">
-<td><strong>BC5</strong></td><td>BPC 157 5mg * 10 Vials</td><td>$166</td><td><button class="btn black small" type="button" data-price-add data-sku="BC5">Add</button></td>
+<tr data-category="BPC 157" data-name="bc5 bpc 157 5mg">
+<td><strong>BC5</strong></td>
+<td>BPC 157</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">5MG</span></td>
+<td><strong>$166</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="BC5">Add</button></td>
 </tr>
-<tr data-category="BPC 157" data-name="bc10 bpc 157 10mg * 10 vials">
-<td><strong>BC10</strong></td><td>BPC 157 10mg * 10 Vials</td><td>$214</td><td><button class="btn black small" type="button" data-price-add data-sku="BC10">Add</button></td>
+<tr data-category="BPC 157" data-name="bc10 bpc 157 10mg">
+<td><strong>BC10</strong></td>
+<td>BPC 157</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10MG</span></td>
+<td><strong>$214</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="BC10">Add</button></td>
 </tr>
-<tr data-category="BPC 157" data-name="bb10 bpc 5mg + tb5mg / 10mg * 10 vials">
-<td><strong>BB10</strong></td><td>BPC 5mg + TB5mg / 10mg * 10 Vials</td><td>$385</td><td><button class="btn black small" type="button" data-price-add data-sku="BB10">Add</button></td>
+<tr data-category="BPC 157" data-name="bb10 bpc 157 + tb500 bpc 5mg + tb 5mg / 10mg">
+<td><strong>BB10</strong></td>
+<td>BPC 157 + TB500</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">BPC 5MG + TB 5MG / 10MG</span></td>
+<td><strong>$385</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="BB10">Add</button></td>
 </tr>
-<tr data-category="BPC 157" data-name="bb20 bpc 10mg + tb10mg / 20mg * 10 vials">
-<td><strong>BB20</strong></td><td>BPC 10mg + TB10mg / 20mg * 10 Vials</td><td>$670</td><td><button class="btn black small" type="button" data-price-add data-sku="BB20">Add</button></td>
+<tr data-category="BPC 157" data-name="bb20 bpc 157 + tb500 bpc 10mg + tb 10mg / 20mg">
+<td><strong>BB20</strong></td>
+<td>BPC 157 + TB500</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">BPC 10MG + TB 10MG / 20MG</span></td>
+<td><strong>$670</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="BB20">Add</button></td>
 </tr>
-<tr data-category="TB500" data-name="bt5 tb500 5mg * 10 vials">
-<td><strong>BT5</strong></td><td>TB500 5mg * 10 Vials</td><td>$355</td><td><button class="btn black small" type="button" data-price-add data-sku="BT5">Add</button></td>
+<tr data-category="TB500" data-name="bt5 tb500 5mg">
+<td><strong>BT5</strong></td>
+<td>TB500</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">5MG</span></td>
+<td><strong>$355</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="BT5">Add</button></td>
 </tr>
-<tr data-category="TB500" data-name="bt10 tb500 10mg * 10 vials">
-<td><strong>BT10</strong></td><td>TB500 10mg * 10 Vials</td><td>$583</td><td><button class="btn black small" type="button" data-price-add data-sku="BT10">Add</button></td>
+<tr data-category="TB500" data-name="bt10 tb500 10mg">
+<td><strong>BT10</strong></td>
+<td>TB500</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10MG</span></td>
+<td><strong>$583</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="BT10">Add</button></td>
 </tr>
-<tr data-category="CJC 1295 + Ipamorelin / Blends" data-name="cp10 cjc 1295 without dac 5mg + ipa / 10mg * 10 vials">
-<td><strong>CP10</strong></td><td>CJC 1295 without DAC 5mg + IPA / 10mg * 10 Vials</td><td>$373</td><td><button class="btn black small" type="button" data-price-add data-sku="CP10">Add</button></td>
+<tr data-category="CJC 1295 + Ipamorelin / Blends" data-name="cp10 cjc 1295 no dac + ipamorelin 10mg">
+<td><strong>CP10</strong></td>
+<td>CJC 1295 no DAC + Ipamorelin</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10MG</span></td>
+<td><strong>$373</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="CP10">Add</button></td>
 </tr>
-<tr data-category="CJC 1295 + Ipamorelin / Blends" data-name="cd5 cjc1295 with dac / 5mg * 10 vials">
-<td><strong>CD5</strong></td><td>CJC1295 with DAC / 5mg * 10 Vials</td><td>$652</td><td><button class="btn black small" type="button" data-price-add data-sku="CD5">Add</button></td>
+<tr data-category="CJC 1295 + Ipamorelin / Blends" data-name="cd5 cjc1295 with dac 5mg">
+<td><strong>CD5</strong></td>
+<td>CJC1295 with DAC</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">5MG</span></td>
+<td><strong>$652</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="CD5">Add</button></td>
 </tr>
-<tr data-category="CJC 1295 + Ipamorelin / Blends" data-name="cd10 cjc1295 with dac / 10mg * 10 vials">
-<td><strong>CD10</strong></td><td>CJC1295 with DAC / 10mg * 10 Vials</td><td>$814</td><td><button class="btn black small" type="button" data-price-add data-sku="CD10">Add</button></td>
+<tr data-category="CJC 1295 + Ipamorelin / Blends" data-name="cd10 cjc1295 with dac 10mg">
+<td><strong>CD10</strong></td>
+<td>CJC1295 with DAC</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10MG</span></td>
+<td><strong>$814</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="CD10">Add</button></td>
 </tr>
-<tr data-category="CJC 1295 + Ipamorelin / Blends" data-name="cnd5 cjc 1295 without dac / 5mg * 10 vials">
-<td><strong>CND5</strong></td><td>CJC 1295 without DAC / 5mg * 10 Vials</td><td>$262</td><td><button class="btn black small" type="button" data-price-add data-sku="CND5">Add</button></td>
+<tr data-category="CJC 1295 + Ipamorelin / Blends" data-name="cnd5 cjc 1295 without dac 5mg">
+<td><strong>CND5</strong></td>
+<td>CJC 1295 without DAC</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">5MG</span></td>
+<td><strong>$262</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="CND5">Add</button></td>
 </tr>
-<tr data-category="CJC 1295 + Ipamorelin / Blends" data-name="cnd10 cjc 1295 without dac / 10mg * 10 vials">
-<td><strong>CND10</strong></td><td>CJC 1295 without DAC / 10mg * 10 Vials</td><td>$478</td><td><button class="btn black small" type="button" data-price-add data-sku="CND10">Add</button></td>
+<tr data-category="CJC 1295 + Ipamorelin / Blends" data-name="cnd10 cjc 1295 without dac 10mg">
+<td><strong>CND10</strong></td>
+<td>CJC 1295 without DAC</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10MG</span></td>
+<td><strong>$478</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="CND10">Add</button></td>
 </tr>
-<tr data-category="CJC 1295 + Ipamorelin / Blends" data-name="ip5 ipamorelin / 5mg * 10 vials">
-<td><strong>IP5</strong></td><td>Ipamorelin / 5mg * 10 Vials</td><td>$166</td><td><button class="btn black small" type="button" data-price-add data-sku="IP5">Add</button></td>
+<tr data-category="CJC 1295 + Ipamorelin / Blends" data-name="ip5 ipamorelin 5mg">
+<td><strong>IP5</strong></td>
+<td>Ipamorelin</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">5MG</span></td>
+<td><strong>$166</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="IP5">Add</button></td>
 </tr>
-<tr data-category="CJC 1295 + Ipamorelin / Blends" data-name="ip10 ipamorelin / 10mg * 10 vials">
-<td><strong>IP10</strong></td><td>Ipamorelin / 10mg * 10 Vials</td><td>$238</td><td><button class="btn black small" type="button" data-price-add data-sku="IP10">Add</button></td>
+<tr data-category="CJC 1295 + Ipamorelin / Blends" data-name="ip10 ipamorelin 10mg">
+<td><strong>IP10</strong></td>
+<td>Ipamorelin</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10MG</span></td>
+<td><strong>$238</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="IP10">Add</button></td>
 </tr>
-<tr data-category="Retatrutide" data-name="rt5 retatrutide 5mg * 10 vials">
-<td><strong>RT5</strong></td><td>Retatrutide 5mg * 10 Vials</td><td>$190</td><td><button class="btn black small" type="button" data-price-add data-sku="RT5">Add</button></td>
+<tr data-category="Retatrutide" data-name="rt5 retatrutide 5mg">
+<td><strong>RT5</strong></td>
+<td>Retatrutide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">5MG</span></td>
+<td><strong>$190</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="RT5">Add</button></td>
 </tr>
-<tr data-category="Retatrutide" data-name="rt10 retatrutide 10mg * 10 vials">
-<td><strong>RT10</strong></td><td>Retatrutide 10mg * 10 Vials</td><td>$292</td><td><button class="btn black small" type="button" data-price-add data-sku="RT10">Add</button></td>
+<tr data-category="Retatrutide" data-name="rt10 retatrutide 10mg">
+<td><strong>RT10</strong></td>
+<td>Retatrutide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10MG</span></td>
+<td><strong>$292</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="RT10">Add</button></td>
 </tr>
-<tr data-category="Retatrutide" data-name="rt15 retatrutide 15mg * 10 vials">
-<td><strong>RT15</strong></td><td>Retatrutide 15mg * 10 Vials</td><td>$388</td><td><button class="btn black small" type="button" data-price-add data-sku="RT15">Add</button></td>
+<tr data-category="Retatrutide" data-name="rt15 retatrutide 15mg">
+<td><strong>RT15</strong></td>
+<td>Retatrutide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">15MG</span></td>
+<td><strong>$388</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="RT15">Add</button></td>
 </tr>
-<tr data-category="Retatrutide" data-name="rt20 retatrutide 20mg * 10 vials">
-<td><strong>RT20</strong></td><td>Retatrutide 20mg * 10 Vials</td><td>$484</td><td><button class="btn black small" type="button" data-price-add data-sku="RT20">Add</button></td>
+<tr data-category="Retatrutide" data-name="rt20 retatrutide 20mg">
+<td><strong>RT20</strong></td>
+<td>Retatrutide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">20MG</span></td>
+<td><strong>$484</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="RT20">Add</button></td>
 </tr>
-<tr data-category="Retatrutide" data-name="rt30 retatrutide 30mg * 10 vials">
-<td><strong>RT30</strong></td><td>Retatrutide 30mg * 10 Vials</td><td>$658</td><td><button class="btn black small" type="button" data-price-add data-sku="RT30">Add</button></td>
+<tr data-category="Retatrutide" data-name="rt30 retatrutide 30mg">
+<td><strong>RT30</strong></td>
+<td>Retatrutide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">30MG</span></td>
+<td><strong>$658</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="RT30">Add</button></td>
 </tr>
-<tr data-category="Retatrutide" data-name="rt40 retatrutide 40mg * 10 vials">
-<td><strong>RT40</strong></td><td>Retatrutide 40mg * 10 Vials</td><td>$817</td><td><button class="btn black small" type="button" data-price-add data-sku="RT40">Add</button></td>
+<tr data-category="Retatrutide" data-name="rt40 retatrutide 40mg">
+<td><strong>RT40</strong></td>
+<td>Retatrutide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">40MG</span></td>
+<td><strong>$817</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="RT40">Add</button></td>
 </tr>
-<tr data-category="Retatrutide" data-name="rt50 retatrutide 50mg * 10 vials">
-<td><strong>RT50</strong></td><td>Retatrutide 50mg * 10 Vials</td><td>$958</td><td><button class="btn black small" type="button" data-price-add data-sku="RT50">Add</button></td>
+<tr data-category="Retatrutide" data-name="rt50 retatrutide 50mg">
+<td><strong>RT50</strong></td>
+<td>Retatrutide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">50MG</span></td>
+<td><strong>$958</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="RT50">Add</button></td>
 </tr>
-<tr data-category="Retatrutide" data-name="rt60 retatrutide 60mg * 10 vials">
-<td><strong>RT60</strong></td><td>Retatrutide 60mg * 10 Vials</td><td>$1,102</td><td><button class="btn black small" type="button" data-price-add data-sku="RT60">Add</button></td>
+<tr data-category="Retatrutide" data-name="rt60 retatrutide 60mg">
+<td><strong>RT60</strong></td>
+<td>Retatrutide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">60MG</span></td>
+<td><strong>$1,102</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="RT60">Add</button></td>
 </tr>
-<tr data-category="GHK-Cu" data-name="cu50 ghk-cu 50mg * 10 vials">
-<td><strong>CU50</strong></td><td>GHK-Cu 50mg * 10 Vials</td><td>$148</td><td><button class="btn black small" type="button" data-price-add data-sku="CU50">Add</button></td>
+<tr data-category="GHK-Cu" data-name="cu50 ghk-cu 50mg">
+<td><strong>CU50</strong></td>
+<td>GHK-Cu</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">50MG</span></td>
+<td><strong>$148</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="CU50">Add</button></td>
 </tr>
-<tr data-category="GHK-Cu" data-name="cu100 ghk-cu 100mg * 10 vials">
-<td><strong>CU100</strong></td><td>GHK-Cu 100mg * 10 Vials</td><td>$181</td><td><button class="btn black small" type="button" data-price-add data-sku="CU100">Add</button></td>
+<tr data-category="GHK-Cu" data-name="cu100 ghk-cu 100mg">
+<td><strong>CU100</strong></td>
+<td>GHK-Cu</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">100MG</span></td>
+<td><strong>$181</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="CU100">Add</button></td>
 </tr>
-<tr data-category="Sermorelin" data-name="smo5 sermorelin 5mg * 10 vials">
-<td><strong>SMO5</strong></td><td>Sermorelin 5mg * 10 Vials</td><td>$292</td><td><button class="btn black small" type="button" data-price-add data-sku="SMO5">Add</button></td>
+<tr data-category="Sermorelin" data-name="smo5 sermorelin 5mg">
+<td><strong>SMO5</strong></td>
+<td>Sermorelin</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">5MG</span></td>
+<td><strong>$292</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="SMO5">Add</button></td>
 </tr>
-<tr data-category="Sermorelin" data-name="smo10 sermorelin 10mg * 10 vials">
-<td><strong>SMO10</strong></td><td>Sermorelin 10mg * 10 Vials</td><td>$508</td><td><button class="btn black small" type="button" data-price-add data-sku="SMO10">Add</button></td>
+<tr data-category="Sermorelin" data-name="smo10 sermorelin 10mg">
+<td><strong>SMO10</strong></td>
+<td>Sermorelin</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10MG</span></td>
+<td><strong>$508</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="SMO10">Add</button></td>
 </tr>
-<tr data-category="Tesamorelin" data-name="tsm5 tesamorelin 5mg * 10 vials">
-<td><strong>TSM5</strong></td><td>Tesamorelin 5mg * 10 Vials</td><td>$421</td><td><button class="btn black small" type="button" data-price-add data-sku="TSM5">Add</button></td>
+<tr data-category="Tesamorelin" data-name="tsm5 tesamorelin 5mg">
+<td><strong>TSM5</strong></td>
+<td>Tesamorelin</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">5MG</span></td>
+<td><strong>$421</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="TSM5">Add</button></td>
 </tr>
-<tr data-category="Tesamorelin" data-name="tsm10 tesamorelin 10mg * 10 vials">
-<td><strong>TSM10</strong></td><td>Tesamorelin 10mg * 10 Vials</td><td>$712</td><td><button class="btn black small" type="button" data-price-add data-sku="TSM10">Add</button></td>
+<tr data-category="Tesamorelin" data-name="tsm10 tesamorelin 10mg">
+<td><strong>TSM10</strong></td>
+<td>Tesamorelin</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10MG</span></td>
+<td><strong>$712</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="TSM10">Add</button></td>
 </tr>
-<tr data-category="Tesamorelin" data-name="tsm20 tesamorelin 20mg * 10 vials">
-<td><strong>TSM20</strong></td><td>Tesamorelin 20mg * 10 Vials</td><td>$1,183</td><td><button class="btn black small" type="button" data-price-add data-sku="TSM20">Add</button></td>
+<tr data-category="Tesamorelin" data-name="tsm20 tesamorelin 20mg">
+<td><strong>TSM20</strong></td>
+<td>Tesamorelin</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">20MG</span></td>
+<td><strong>$1,183</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="TSM20">Add</button></td>
 </tr>
-<tr data-category="NAD+" data-name="nj100 nad+ 100mg * 10 vials">
-<td><strong>NJ100</strong></td><td>NAD+ 100mg * 10 Vials</td><td>$166</td><td><button class="btn black small" type="button" data-price-add data-sku="NJ100">Add</button></td>
+<tr data-category="NAD+" data-name="nj100 nad+ 100mg">
+<td><strong>NJ100</strong></td>
+<td>NAD+</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">100MG</span></td>
+<td><strong>$166</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="NJ100">Add</button></td>
 </tr>
-<tr data-category="NAD+" data-name="nj500 nad+ 500mg * 10 vials">
-<td><strong>NJ500</strong></td><td>NAD+ 500mg * 10 Vials</td><td>$223</td><td><button class="btn black small" type="button" data-price-add data-sku="NJ500">Add</button></td>
+<tr data-category="NAD+" data-name="nj500 nad+ 500mg">
+<td><strong>NJ500</strong></td>
+<td>NAD+</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">500MG</span></td>
+<td><strong>$223</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="NJ500">Add</button></td>
 </tr>
-<tr data-category="NAD+" data-name="nj1000 nad+ 1000mg * 10 vials">
-<td><strong>NJ1000</strong></td><td>NAD+ 1000mg * 10 Vials</td><td>$280</td><td><button class="btn black small" type="button" data-price-add data-sku="NJ1000">Add</button></td>
+<tr data-category="NAD+" data-name="nj1000 nad+ 1000mg">
+<td><strong>NJ1000</strong></td>
+<td>NAD+</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">1000MG</span></td>
+<td><strong>$280</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="NJ1000">Add</button></td>
 </tr>
-<tr data-category="KLOW / GLOW" data-name="glow70 glow 70mg * 10 vials">
-<td><strong>GLOW70</strong></td><td>GLOW 70mg * 10 Vials</td><td>$712</td><td><button class="btn black small" type="button" data-price-add data-sku="GLOW70">Add</button></td>
+<tr data-category="KLOW / GLOW" data-name="glow70 glow 70mg">
+<td><strong>GLOW70</strong></td>
+<td>GLOW</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">70MG</span></td>
+<td><strong>$712</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="GLOW70">Add</button></td>
 </tr>
-<tr data-category="KLOW / GLOW" data-name="klow80 klow 80mg * 10 vials">
-<td><strong>KLOW80</strong></td><td>KLOW 80mg * 10 Vials</td><td>$895</td><td><button class="btn black small" type="button" data-price-add data-sku="KLOW80">Add</button></td>
+<tr data-category="KLOW / GLOW" data-name="klow80 klow 80mg">
+<td><strong>KLOW80</strong></td>
+<td>KLOW</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">80MG</span></td>
+<td><strong>$895</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="KLOW80">Add</button></td>
 </tr>
-<tr data-category="IGF-1 LR3" data-name="ig1 igf-1 lr3 1mg * 10 vials">
-<td><strong>IG1</strong></td><td>IGF-1 LR3 1mg * 10 Vials</td><td>$757</td><td><button class="btn black small" type="button" data-price-add data-sku="IG1">Add</button></td>
+<tr data-category="IGF-1 LR3" data-name="ig1 igf-1 lr3 1mg">
+<td><strong>IG1</strong></td>
+<td>IGF-1 LR3</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">1MG</span></td>
+<td><strong>$757</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="IG1">Add</button></td>
 </tr>
-<tr data-category="MOTS-c" data-name="ms10 mots-c 10mg * 10 vials">
-<td><strong>MS10</strong></td><td>MOTS-c 10mg * 10 Vials</td><td>$283</td><td><button class="btn black small" type="button" data-price-add data-sku="MS10">Add</button></td>
+<tr data-category="MOTS-c" data-name="ms10 mots-c 10mg">
+<td><strong>MS10</strong></td>
+<td>MOTS-c</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10MG</span></td>
+<td><strong>$283</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="MS10">Add</button></td>
 </tr>
-<tr data-category="MOTS-c" data-name="ms20 mots-c 20mg * 10 vials">
-<td><strong>MS20</strong></td><td>MOTS-c 20mg * 10 Vials</td><td>$451</td><td><button class="btn black small" type="button" data-price-add data-sku="MS20">Add</button></td>
+<tr data-category="MOTS-c" data-name="ms20 mots-c 20mg">
+<td><strong>MS20</strong></td>
+<td>MOTS-c</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">20MG</span></td>
+<td><strong>$451</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="MS20">Add</button></td>
 </tr>
-<tr data-category="MOTS-c" data-name="ms40 mots-c 40mg * 10 vials">
-<td><strong>MS40</strong></td><td>MOTS-c 40mg * 10 Vials</td><td>$775</td><td><button class="btn black small" type="button" data-price-add data-sku="MS40">Add</button></td>
+<tr data-category="MOTS-c" data-name="ms40 mots-c 40mg">
+<td><strong>MS40</strong></td>
+<td>MOTS-c</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">40MG</span></td>
+<td><strong>$775</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="MS40">Add</button></td>
 </tr>
-<tr data-category="Epithalon" data-name="et10 epithalon 10mg * 10 vials">
-<td><strong>ET10</strong></td><td>Epithalon 10mg * 10 Vials</td><td>$172</td><td><button class="btn black small" type="button" data-price-add data-sku="ET10">Add</button></td>
+<tr data-category="Epithalon" data-name="et10 epithalon 10mg">
+<td><strong>ET10</strong></td>
+<td>Epithalon</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10MG</span></td>
+<td><strong>$172</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="ET10">Add</button></td>
 </tr>
-<tr data-category="Epithalon" data-name="et50 epithalon 50mg * 10 vials">
-<td><strong>ET50</strong></td><td>Epithalon 50mg * 10 Vials</td><td>$547</td><td><button class="btn black small" type="button" data-price-add data-sku="ET50">Add</button></td>
+<tr data-category="Epithalon" data-name="et50 epithalon 50mg">
+<td><strong>ET50</strong></td>
+<td>Epithalon</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">50MG</span></td>
+<td><strong>$547</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="ET50">Add</button></td>
 </tr>
-<tr data-category="Cagrilintide" data-name="cgl5 cagrilintide 5mg * 10 vials">
-<td><strong>CGL5</strong></td><td>Cagrilintide 5mg * 10 Vials</td><td>$499</td><td><button class="btn black small" type="button" data-price-add data-sku="CGL5">Add</button></td>
+<tr data-category="Cagrilintide" data-name="cgl5 cagrilintide 5mg">
+<td><strong>CGL5</strong></td>
+<td>Cagrilintide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">5MG</span></td>
+<td><strong>$499</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="CGL5">Add</button></td>
 </tr>
-<tr data-category="Cagrilintide" data-name="cgl10 cagrilintide 10mg * 10 vials">
-<td><strong>CGL10</strong></td><td>Cagrilintide 10mg * 10 Vials</td><td>$790</td><td><button class="btn black small" type="button" data-price-add data-sku="CGL10">Add</button></td>
+<tr data-category="Cagrilintide" data-name="cgl10 cagrilintide 10mg">
+<td><strong>CGL10</strong></td>
+<td>Cagrilintide</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10MG</span></td>
+<td><strong>$790</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="CGL10">Add</button></td>
 </tr>
-<tr data-category="5-AMINO-1MQ" data-name="5am 5-amino-1mq 5mg * 10 vials">
-<td><strong>5AM</strong></td><td>5-AMINO-1MQ 5mg * 10 Vials</td><td>$103</td><td><button class="btn black small" type="button" data-price-add data-sku="5AM">Add</button></td>
+<tr data-category="5-AMINO-1MQ" data-name="5am 5-amino-1mq 5mg">
+<td><strong>5AM</strong></td>
+<td>5-AMINO-1MQ</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">5MG</span></td>
+<td><strong>$103</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="5AM">Add</button></td>
 </tr>
-<tr data-category="5-AMINO-1MQ" data-name="10am 5-amino-1mq 10mg * 10 vials">
-<td><strong>10AM</strong></td><td>5-AMINO-1MQ 10mg * 10 Vials</td><td>$181</td><td><button class="btn black small" type="button" data-price-add data-sku="10AM">Add</button></td>
-</tr></tbody>
-      </table>
+<tr data-category="5-AMINO-1MQ" data-name="10am 5-amino-1mq 10mg">
+<td><strong>10AM</strong></td>
+<td>5-AMINO-1MQ</td>
+<td><span class="vials-pill">10 Vials</span></td>
+<td><span class="mg-pill">10MG</span></td>
+<td><strong>$181</strong></td>
+<td><button class="btn black small" type="button" data-price-add data-sku="10AM">Add</button></td>
+</tr>
+</tbody>
+</table>
     </div>
     <aside class="order-panel">
       <h3>Selected Items</h3>
@@ -286,6 +569,20 @@
     <div><strong>2. Text the order</strong><p>The site opens a pre-filled text to 305-449-1784 with selected items and total.</p></div>
     <div><strong>3. Ask questions</strong><p>They request availability, wholesale pricing, COA documents, and payment instructions.</p></div>
     <div><strong>4. Pay by link</strong><p>You send the approved payment link directly through the text thread.</p></div>
+  </div>
+</section>
+
+
+<section class="human-order-banner">
+  <div>
+    <span class="eyebrow">REAL HUMAN ORDER SUPPORT</span>
+    <h2>Every order goes through a human sales rep — not AI, not a chatbot.</h2>
+    <p>For orders, selected items, pricing, COA questions, and payment link instructions, text the primary PEPS GLOBAL sales line.</p>
+  </div>
+  <div class="human-actions">
+    <a class="btn black" href="sms:3054491784?&body=Hi%20PEPS%20GLOBAL%2C%20I%20want%20to%20place%20a%20research-use-only%20order.%20Please%20connect%20me%20with%20a%20human%20sales%20rep.">Text Orders: 305-449-1784</a>
+    <a class="btn outline" href="sms:3053157577?&body=Hi%20PEPS%20GLOBAL%2C%20I%20would%20like%20to%20talk%20to%20a%20human%20global%20agent%20in%20English%20or%20Spanish.">Talk to Human Agent: 305-315-7577</a>
+    <a class="btn outline" href="mailto:Globalpepsorg@gmail.com?subject=PEPS%20GLOBAL%20Inquiry">Email: Globalpepsorg@gmail.com</a>
   </div>
 </section>
 
@@ -309,4 +606,4 @@
 </div>
 <div class="search-overlay" data-search-overlay><button data-close-search>×</button><div class="search-box"><input placeholder="Search catalog..." data-search-input><div data-search-results></div></div></div>
 <div class="age-gate" data-age-gate><div class="age-panel"><div class="brand gate-brand"><span>PEPS</span><span>GLOBAL</span></div><h2>Research access</h2><p>This website is intended for qualified adult researchers and institutional professionals. Products are for laboratory research use only.</p><label class="checkline"><input type="checkbox" data-age-check> I confirm I am 21+ and understand these products are not for human or veterinary use.</label><button class="btn black full" data-age-enter>Enter PEPS GLOBAL</button></div></div>
-<script src="app.js?v=11"></script></body></html>
+<script src="app.js?v=12"></script></body></html>
