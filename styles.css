@@ -391,3 +391,17 @@
 .drawer-actions-v12 .btn{text-align:center}
 .selected-row small{display:block;color:#777;margin-top:4px;line-height:1.35}
 @media(max-width:950px){.human-order-banner{grid-template-columns:1fr}.human-actions{min-width:0}.human-order-banner h2{font-size:28px}}
+
+/* V13 real product pricing */
+.v13-product-card .product-meta{display:block}
+.package-line{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.per-vial-inline{font-size:12px;color:#666;font-weight:600;margin-left:4px}
+.v13-catalog-tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.v13-catalog-tools input,.v13-catalog-tools select,.filters select,.filters [data-v13-search]{border:1px solid var(--line);background:#fff;padding:12px;min-width:220px;width:100%;margin-top:8px}
+.v13-product-card .add-card-btn{margin-top:10px;width:100%}
+.size-row .size{min-width:150px;display:grid;gap:5px;text-align:left}
+.size-row .size small{font-size:11px;color:inherit;opacity:.75}
+.v13-pricing-table td:nth-child(3),.v13-pricing-table td:nth-child(4),.v13-pricing-table th:nth-child(3),.v13-pricing-table th:nth-child(4){text-align:center}
+.drawer-actions-v13{display:grid;gap:10px;margin-top:auto;padding-top:18px;border-top:1px solid var(--line)}
+.drawer-actions-v13 .btn{text-align:center}
+.drawer-vials{background:#111!important;color:#fff!important;border-color:#111!important;font-weight:700}

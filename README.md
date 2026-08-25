@@ -86,3 +86,10 @@ Updated visuals include BPC-157, GHK-Cu, CJC-1295/Ipamorelin, Wolverine, Glow, M
 - Added email inquiry: Globalpepsorg@gmail.com.
 - Emphasized every order goes through a human sales rep, not AI/chatbot.
 - Updated SMS order messages to request human sales rep review.
+
+## V13 pricing correction
+- Catalog now uses only the real product list and real 10-vial prices.
+- Removed Enclomiphene and MK-677 from the live dynamic catalog.
+- Product cards show 10 Vials first, MG each second.
+- Main price includes ($/vial) next to it.
+- Product detail variants, quote drawer, and SMS order text use the same real pricing.

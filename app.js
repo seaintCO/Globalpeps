@@ -657,3 +657,205 @@ function pepsBuildPriceMessage(items) {
   addHumanBadges();
   document.addEventListener("click", () => setTimeout(cleanDrawer, 30));
 })();
+
+
+
+// ---- V13 REAL 10-VIAL CATALOG PRICING OVERRIDE ----
+(() => {
+  const REAL_PRODUCTS = [{"slug": "wa3", "sku": "WA3", "category": "Bacteriostatic Water", "product": "Bac.water", "name": "Bac.water — 10 Vials / 3ml", "short": "Bac.water", "vials": "10 Vials", "mg": "3ml", "price": 77, "perVial": 7.7, "min": 77, "max": 77, "image": "assets/group-catalog.png"}, {"slug": "wa10", "sku": "WA10", "category": "Bacteriostatic Water", "product": "Bac.water", "name": "Bac.water — 10 Vials / 10ml", "short": "Bac.water", "vials": "10 Vials", "mg": "10ml", "price": 83, "perVial": 8.3, "min": 83, "max": 83, "image": "assets/group-catalog.png"}, {"slug": "trs", "sku": "TRS", "category": "Tirzepatide", "product": "Tirzepatide", "name": "Tirzepatide — 10 Vials / 5mg", "short": "Tirzepatide", "vials": "10 Vials", "mg": "5mg", "price": 137, "perVial": 13.7, "min": 137, "max": 137, "image": "assets/tesamorelin-hero.png"}, {"slug": "tr10", "sku": "TR10", "category": "Tirzepatide", "product": "Tirzepatide", "name": "Tirzepatide — 10 Vials / 10mg", "short": "Tirzepatide", "vials": "10 Vials", "mg": "10mg", "price": 224, "perVial": 22.4, "min": 224, "max": 224, "image": "assets/tesamorelin-hero.png"}, {"slug": "tr15", "sku": "TR15", "category": "Tirzepatide", "product": "Tirzepatide", "name": "Tirzepatide — 10 Vials / 15mg", "short": "Tirzepatide", "vials": "10 Vials", "mg": "15mg", "price": 296, "perVial": 29.6, "min": 296, "max": 296, "image": "assets/tesamorelin-hero.png"}, {"slug": "tr20", "sku": "TR20", "category": "Tirzepatide", "product": "Tirzepatide", "name": "Tirzepatide — 10 Vials / 20mg", "short": "Tirzepatide", "vials": "10 Vials", "mg": "20mg", "price": 377, "perVial": 37.7, "min": 377, "max": 377, "image": "assets/tesamorelin-hero.png"}, {"slug": "tr30", "sku": "TR30", "category": "Tirzepatide", "product": "Tirzepatide", "name": "Tirzepatide — 10 Vials / 30mg", "short": "Tirzepatide", "vials": "10 Vials", "mg": "30mg", "price": 479, "perVial": 47.9, "min": 479, "max": 479, "image": "assets/tesamorelin-hero.png"}, {"slug": "tr40", "sku": "TR40", "category": "Tirzepatide", "product": "Tirzepatide", "name": "Tirzepatide — 10 Vials / 40mg", "short": "Tirzepatide", "vials": "10 Vials", "mg": "40mg", "price": 599, "perVial": 59.9, "min": 599, "max": 599, "image": "assets/tesamorelin-hero.png"}, {"slug": "tr50", "sku": "TR50", "category": "Tirzepatide", "product": "Tirzepatide", "name": "Tirzepatide — 10 Vials / 50mg", "short": "Tirzepatide", "vials": "10 Vials", "mg": "50mg", "price": 701, "perVial": 70.1, "min": 701, "max": 701, "image": "assets/tesamorelin-hero.png"}, {"slug": "tr60", "sku": "TR60", "category": "Tirzepatide", "product": "Tirzepatide", "name": "Tirzepatide — 10 Vials / 60mg", "short": "Tirzepatide", "vials": "10 Vials", "mg": "60mg", "price": 803, "perVial": 80.3, "min": 803, "max": 803, "image": "assets/tesamorelin-hero.png"}, {"slug": "tr100", "sku": "TR100", "category": "Tirzepatide", "product": "Tirzepatide", "name": "Tirzepatide — 10 Vials / 100mg", "short": "Tirzepatide", "vials": "10 Vials", "mg": "100mg", "price": 1220, "perVial": 122.0, "min": 1220, "max": 1220, "image": "assets/tesamorelin-hero.png"}, {"slug": "sm10", "sku": "SM10", "category": "Semaglutide", "product": "Semaglutide", "name": "Semaglutide — 10 Vials / 10mg", "short": "Semaglutide", "vials": "10 Vials", "mg": "10mg", "price": 221, "perVial": 22.1, "min": 221, "max": 221, "image": "assets/tesamorelin-hero.png"}, {"slug": "sm20", "sku": "SM20", "category": "Semaglutide", "product": "Semaglutide", "name": "Semaglutide — 10 Vials / 20mg", "short": "Semaglutide", "vials": "10 Vials", "mg": "20mg", "price": 308, "perVial": 30.8, "min": 308, "max": 308, "image": "assets/tesamorelin-hero.png"}, {"slug": "bc5", "sku": "BC5", "category": "BPC 157", "product": "BPC 157", "name": "BPC 157 — 10 Vials / 5mg", "short": "BPC 157", "vials": "10 Vials", "mg": "5mg", "price": 146, "perVial": 14.6, "min": 146, "max": 146, "image": "assets/bpc-157-vial.png"}, {"slug": "bc10", "sku": "BC10", "category": "BPC 157", "product": "BPC 157", "name": "BPC 157 — 10 Vials / 10mg", "short": "BPC 157", "vials": "10 Vials", "mg": "10mg", "price": 194, "perVial": 19.4, "min": 194, "max": 194, "image": "assets/bpc-157-vial.png"}, {"slug": "bb10", "sku": "BB10", "category": "BPC 157", "product": "BPC 157 + TB500", "name": "BPC 157 + TB500 — 10 Vials / BPC 5mg + TB 5mg / 10mg total", "short": "BPC 157 + TB500", "vials": "10 Vials", "mg": "BPC 5mg + TB 5mg / 10mg total", "price": 365, "perVial": 36.5, "min": 365, "max": 365, "image": "assets/bpc-157-vial.png"}, {"slug": "bb20", "sku": "BB20", "category": "BPC 157", "product": "BPC 157 + TB500", "name": "BPC 157 + TB500 — 10 Vials / BPC 10mg + TB 10mg / 20mg total", "short": "BPC 157 + TB500", "vials": "10 Vials", "mg": "BPC 10mg + TB 10mg / 20mg total", "price": 650, "perVial": 65.0, "min": 650, "max": 650, "image": "assets/bpc-157-vial.png"}, {"slug": "bt5", "sku": "BT5", "category": "TB500", "product": "TB500", "name": "TB500 — 10 Vials / 5mg", "short": "TB500", "vials": "10 Vials", "mg": "5mg", "price": 335, "perVial": 33.5, "min": 335, "max": 335, "image": "assets/wolverine-vial.png"}, {"slug": "bt10", "sku": "BT10", "category": "TB500", "product": "TB500", "name": "TB500 — 10 Vials / 10mg", "short": "TB500", "vials": "10 Vials", "mg": "10mg", "price": 563, "perVial": 56.3, "min": 563, "max": 563, "image": "assets/wolverine-vial.png"}, {"slug": "cp10", "sku": "CP10", "category": "CJC 1295 + Ipamorelin / Blends", "product": "CJC 1295 no DAC + Ipamorelin", "name": "CJC 1295 no DAC + Ipamorelin — 10 Vials / CJC 5mg + IPA 5mg / 10mg total", "short": "CJC 1295 no DAC + Ipamorelin", "vials": "10 Vials", "mg": "CJC 5mg + IPA 5mg / 10mg total", "price": 353, "perVial": 35.3, "min": 353, "max": 353, "image": "assets/cjc-ipamorelin-vial.png"}, {"slug": "cd5", "sku": "CD5", "category": "CJC 1295 + Ipamorelin / Blends", "product": "CJC1295 with DAC", "name": "CJC1295 with DAC — 10 Vials / 5mg", "short": "CJC1295 with DAC", "vials": "10 Vials", "mg": "5mg", "price": 632, "perVial": 63.2, "min": 632, "max": 632, "image": "assets/cjc-ipamorelin-vial.png"}, {"slug": "cd10", "sku": "CD10", "category": "CJC 1295 + Ipamorelin / Blends", "product": "CJC1295 with DAC", "name": "CJC1295 with DAC — 10 Vials / 10mg", "short": "CJC1295 with DAC", "vials": "10 Vials", "mg": "10mg", "price": 794, "perVial": 79.4, "min": 794, "max": 794, "image": "assets/cjc-ipamorelin-vial.png"}, {"slug": "cnd5", "sku": "CND5", "category": "CJC 1295 + Ipamorelin / Blends", "product": "CJC 1295 without DAC", "name": "CJC 1295 without DAC — 10 Vials / 5mg", "short": "CJC 1295 without DAC", "vials": "10 Vials", "mg": "5mg", "price": 242, "perVial": 24.2, "min": 242, "max": 242, "image": "assets/cjc-ipamorelin-vial.png"}, {"slug": "cnd10", "sku": "CND10", "category": "CJC 1295 + Ipamorelin / Blends", "product": "CJC 1295 without DAC", "name": "CJC 1295 without DAC — 10 Vials / 10mg", "short": "CJC 1295 without DAC", "vials": "10 Vials", "mg": "10mg", "price": 458, "perVial": 45.8, "min": 458, "max": 458, "image": "assets/cjc-ipamorelin-vial.png"}, {"slug": "ip5", "sku": "IP5", "category": "CJC 1295 + Ipamorelin / Blends", "product": "Ipamorelin", "name": "Ipamorelin — 10 Vials / 5mg", "short": "Ipamorelin", "vials": "10 Vials", "mg": "5mg", "price": 146, "perVial": 14.6, "min": 146, "max": 146, "image": "assets/cjc-ipamorelin-vial.png"}, {"slug": "ip10", "sku": "IP10", "category": "CJC 1295 + Ipamorelin / Blends", "product": "Ipamorelin", "name": "Ipamorelin — 10 Vials / 10mg", "short": "Ipamorelin", "vials": "10 Vials", "mg": "10mg", "price": 218, "perVial": 21.8, "min": 218, "max": 218, "image": "assets/cjc-ipamorelin-vial.png"}, {"slug": "rt5", "sku": "RT5", "category": "Retatrutide", "product": "Retatrutide", "name": "Retatrutide — 10 Vials / 5mg", "short": "Retatrutide", "vials": "10 Vials", "mg": "5mg", "price": 170, "perVial": 17.0, "min": 170, "max": 170, "image": "assets/tesamorelin-hero.png"}, {"slug": "rt10", "sku": "RT10", "category": "Retatrutide", "product": "Retatrutide", "name": "Retatrutide — 10 Vials / 10mg", "short": "Retatrutide", "vials": "10 Vials", "mg": "10mg", "price": 272, "perVial": 27.2, "min": 272, "max": 272, "image": "assets/tesamorelin-hero.png"}, {"slug": "rt15", "sku": "RT15", "category": "Retatrutide", "product": "Retatrutide", "name": "Retatrutide — 10 Vials / 15mg", "short": "Retatrutide", "vials": "10 Vials", "mg": "15mg", "price": 368, "perVial": 36.8, "min": 368, "max": 368, "image": "assets/tesamorelin-hero.png"}, {"slug": "rt20", "sku": "RT20", "category": "Retatrutide", "product": "Retatrutide", "name": "Retatrutide — 10 Vials / 20mg", "short": "Retatrutide", "vials": "10 Vials", "mg": "20mg", "price": 464, "perVial": 46.4, "min": 464, "max": 464, "image": "assets/tesamorelin-hero.png"}, {"slug": "rt30", "sku": "RT30", "category": "Retatrutide", "product": "Retatrutide", "name": "Retatrutide — 10 Vials / 30mg", "short": "Retatrutide", "vials": "10 Vials", "mg": "30mg", "price": 638, "perVial": 63.8, "min": 638, "max": 638, "image": "assets/tesamorelin-hero.png"}, {"slug": "rt40", "sku": "RT40", "category": "Retatrutide", "product": "Retatrutide", "name": "Retatrutide — 10 Vials / 40mg", "short": "Retatrutide", "vials": "10 Vials", "mg": "40mg", "price": 797, "perVial": 79.7, "min": 797, "max": 797, "image": "assets/tesamorelin-hero.png"}, {"slug": "rt50", "sku": "RT50", "category": "Retatrutide", "product": "Retatrutide", "name": "Retatrutide — 10 Vials / 50mg", "short": "Retatrutide", "vials": "10 Vials", "mg": "50mg", "price": 938, "perVial": 93.8, "min": 938, "max": 938, "image": "assets/tesamorelin-hero.png"}, {"slug": "rt60", "sku": "RT60", "category": "Retatrutide", "product": "Retatrutide", "name": "Retatrutide — 10 Vials / 60mg", "short": "Retatrutide", "vials": "10 Vials", "mg": "60mg", "price": 1082, "perVial": 108.2, "min": 1082, "max": 1082, "image": "assets/tesamorelin-hero.png"}, {"slug": "cu50", "sku": "CU50", "category": "GHK-Cu", "product": "GHK-Cu", "name": "GHK-Cu — 10 Vials / 50mg", "short": "GHK-Cu", "vials": "10 Vials", "mg": "50mg", "price": 128, "perVial": 12.8, "min": 128, "max": 128, "image": "assets/ghk-cu-vial.png"}, {"slug": "cu100", "sku": "CU100", "category": "GHK-Cu", "product": "GHK-Cu", "name": "GHK-Cu — 10 Vials / 100mg", "short": "GHK-Cu", "vials": "10 Vials", "mg": "100mg", "price": 161, "perVial": 16.1, "min": 161, "max": 161, "image": "assets/ghk-cu-vial.png"}, {"slug": "smo5", "sku": "SMO5", "category": "Sermorelin", "product": "Sermorelin", "name": "Sermorelin — 10 Vials / 5mg", "short": "Sermorelin", "vials": "10 Vials", "mg": "5mg", "price": 272, "perVial": 27.2, "min": 272, "max": 272, "image": "assets/tesamorelin-hero.png"}, {"slug": "smo10", "sku": "SMO10", "category": "Sermorelin", "product": "Sermorelin", "name": "Sermorelin — 10 Vials / 10mg", "short": "Sermorelin", "vials": "10 Vials", "mg": "10mg", "price": 488, "perVial": 48.8, "min": 488, "max": 488, "image": "assets/tesamorelin-hero.png"}, {"slug": "tsm5", "sku": "TSM5", "category": "Tesamorelin", "product": "Tesamorelin", "name": "Tesamorelin — 10 Vials / 5mg", "short": "Tesamorelin", "vials": "10 Vials", "mg": "5mg", "price": 401, "perVial": 40.1, "min": 401, "max": 401, "image": "assets/tesamorelin-hero.png"}, {"slug": "tsm10", "sku": "TSM10", "category": "Tesamorelin", "product": "Tesamorelin", "name": "Tesamorelin — 10 Vials / 10mg", "short": "Tesamorelin", "vials": "10 Vials", "mg": "10mg", "price": 692, "perVial": 69.2, "min": 692, "max": 692, "image": "assets/tesamorelin-hero.png"}, {"slug": "tsm20", "sku": "TSM20", "category": "Tesamorelin", "product": "Tesamorelin", "name": "Tesamorelin — 10 Vials / 20mg", "short": "Tesamorelin", "vials": "10 Vials", "mg": "20mg", "price": 1163, "perVial": 116.3, "min": 1163, "max": 1163, "image": "assets/tesamorelin-hero.png"}, {"slug": "nj100", "sku": "NJ100", "category": "NAD+", "product": "NAD+", "name": "NAD+ — 10 Vials / 100mg", "short": "NAD+", "vials": "10 Vials", "mg": "100mg", "price": 146, "perVial": 14.6, "min": 146, "max": 146, "image": "assets/group-catalog.png"}, {"slug": "nj500", "sku": "NJ500", "category": "NAD+", "product": "NAD+", "name": "NAD+ — 10 Vials / 500mg", "short": "NAD+", "vials": "10 Vials", "mg": "500mg", "price": 203, "perVial": 20.3, "min": 203, "max": 203, "image": "assets/group-catalog.png"}, {"slug": "nj1000", "sku": "NJ1000", "category": "NAD+", "product": "NAD+", "name": "NAD+ — 10 Vials / 1000mg", "short": "NAD+", "vials": "10 Vials", "mg": "1000mg", "price": 260, "perVial": 26.0, "min": 260, "max": 260, "image": "assets/group-catalog.png"}, {"slug": "glow70", "sku": "GLOW70", "category": "KLOW / GLOW", "product": "GLOW", "name": "GLOW — 10 Vials / 70mg total", "short": "GLOW", "vials": "10 Vials", "mg": "70mg total", "price": 692, "perVial": 69.2, "min": 692, "max": 692, "image": "assets/glow-vial.png"}, {"slug": "klow80", "sku": "KLOW80", "category": "KLOW / GLOW", "product": "KLOW", "name": "KLOW — 10 Vials / 80mg total", "short": "KLOW", "vials": "10 Vials", "mg": "80mg total", "price": 875, "perVial": 87.5, "min": 875, "max": 875, "image": "assets/glow-vial.png"}, {"slug": "ig1", "sku": "IG1", "category": "IGF-1 LR3", "product": "IGF-1 LR3", "name": "IGF-1 LR3 — 10 Vials / 1mg", "short": "IGF-1 LR3", "vials": "10 Vials", "mg": "1mg", "price": 737, "perVial": 73.7, "min": 737, "max": 737, "image": "assets/group-catalog.png"}, {"slug": "ms10", "sku": "MS10", "category": "MOTS-c", "product": "MOTS-c", "name": "MOTS-c — 10 Vials / 10mg", "short": "MOTS-c", "vials": "10 Vials", "mg": "10mg", "price": 263, "perVial": 26.3, "min": 263, "max": 263, "image": "assets/mots-c-vial.png"}, {"slug": "ms20", "sku": "MS20", "category": "MOTS-c", "product": "MOTS-c", "name": "MOTS-c — 10 Vials / 20mg", "short": "MOTS-c", "vials": "10 Vials", "mg": "20mg", "price": 431, "perVial": 43.1, "min": 431, "max": 431, "image": "assets/mots-c-vial.png"}, {"slug": "ms40", "sku": "MS40", "category": "MOTS-c", "product": "MOTS-c", "name": "MOTS-c — 10 Vials / 40mg", "short": "MOTS-c", "vials": "10 Vials", "mg": "40mg", "price": 755, "perVial": 75.5, "min": 755, "max": 755, "image": "assets/mots-c-vial.png"}, {"slug": "et10", "sku": "ET10", "category": "Epithalon", "product": "Epithalon", "name": "Epithalon — 10 Vials / 10mg", "short": "Epithalon", "vials": "10 Vials", "mg": "10mg", "price": 152, "perVial": 15.2, "min": 152, "max": 152, "image": "assets/epithalon-vial.png"}, {"slug": "et50", "sku": "ET50", "category": "Epithalon", "product": "Epithalon", "name": "Epithalon — 10 Vials / 50mg", "short": "Epithalon", "vials": "10 Vials", "mg": "50mg", "price": 527, "perVial": 52.7, "min": 527, "max": 527, "image": "assets/epithalon-vial.png"}, {"slug": "cgl5", "sku": "CGL5", "category": "Cagrilintide", "product": "Cagrilintide", "name": "Cagrilintide — 10 Vials / 5mg", "short": "Cagrilintide", "vials": "10 Vials", "mg": "5mg", "price": 479, "perVial": 47.9, "min": 479, "max": 479, "image": "assets/group-catalog.png"}, {"slug": "cgl10", "sku": "CGL10", "category": "Cagrilintide", "product": "Cagrilintide", "name": "Cagrilintide — 10 Vials / 10mg", "short": "Cagrilintide", "vials": "10 Vials", "mg": "10mg", "price": 770, "perVial": 77.0, "min": 770, "max": 770, "image": "assets/group-catalog.png"}, {"slug": "5am", "sku": "5AM", "category": "5-AMINO-1MQ", "product": "5-AMINO-1MQ", "name": "5-AMINO-1MQ — 10 Vials / 5mg", "short": "5-AMINO-1MQ", "vials": "10 Vials", "mg": "5mg", "price": 83, "perVial": 8.3, "min": 83, "max": 83, "image": "assets/group-catalog.png"}, {"slug": "10am", "sku": "10AM", "category": "5-AMINO-1MQ", "product": "5-AMINO-1MQ", "name": "5-AMINO-1MQ — 10 Vials / 10mg", "short": "5-AMINO-1MQ", "vials": "10 Vials", "mg": "10mg", "price": 161, "perVial": 16.1, "min": 161, "max": 161, "image": "assets/group-catalog.png"}];
+  const CATEGORIES = ["5-AMINO-1MQ", "BPC 157", "Bacteriostatic Water", "CJC 1295 + Ipamorelin / Blends", "Cagrilintide", "Epithalon", "GHK-Cu", "IGF-1 LR3", "KLOW / GLOW", "MOTS-c", "NAD+", "Retatrutide", "Semaglutide", "Sermorelin", "TB500", "Tesamorelin", "Tirzepatide"];
+  const ORDER_NUMBER = "3054491784";
+  const HUMAN_NUMBER = "3053157577";
+  const EMAIL = "Globalpepsorg@gmail.com";
+  const $ = (s,c=document)=>c.querySelector(s);
+  const $$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
+  const money = n => "$" + Number(n || 0).toLocaleString();
+  const perVial = n => "($" + (Number(n || 0) / 10).toFixed(2) + "/vial)";
+  const sms = (phone, body) => "sms:" + phone + "?&body=" + encodeURIComponent(body);
+
+  // Replace old product source everywhere after previous scripts load.
+  window.PRODUCTS = REAL_PRODUCTS;
+
+  function getCart() {
+    try { return JSON.parse(localStorage.getItem("peps_cart") || "[]"); }
+    catch(e) { return []; }
+  }
+  function saveCart(cart) {
+    localStorage.setItem("peps_cart", JSON.stringify(cart));
+    localStorage.setItem("wop_cart", JSON.stringify(cart));
+  }
+  function orderText(cart) {
+    const lines = [
+      "Hi PEPS GLOBAL, I want to request a research-use-only order.",
+      "",
+      "Please have a HUMAN sales rep review this order. No AI / no chatbot.",
+      "",
+      "Selected items:"
+    ];
+    let total = 0;
+    cart.forEach(x => {
+      const qty = Number(x.qty || 1);
+      const price = Number(x.price || x.selectedPrice || 0);
+      total += price * qty;
+      lines.push("- " + (x.sku || "") + " | " + (x.product || x.name || "") + " | " + (x.vials || "10 Vials") + " | " + (x.mg || x.size || "") + " each | Qty " + qty + " | " + money(price * qty));
+    });
+    lines.push("", "Estimated total: " + money(total));
+    lines.push("", "Please confirm availability, applicable COA documentation, shipping, and send the payment link.");
+    lines.push("Research use only. Not for human or veterinary use.");
+    lines.push("Email: " + EMAIL);
+    return lines.join("\n");
+  }
+  function productCard(p) {
+    return `<article class="product-card v13-product-card">
+      <a href="product.html?item=${p.slug}" class="product-image real"><img loading="lazy" src="${p.image}" alt="${p.product}"></a>
+      <div class="product-meta">
+        <a href="product.html?item=${p.slug}" class="product-name">${p.product}</a>
+        <button class="heart" type="button" aria-label="Save ${p.product}">♡</button>
+        <div class="package-line"><span class="vials-pill">${p.vials}</span><span class="mg-pill">${p.mg.toUpperCase()} each</span></div>
+        <div class="product-price">${money(p.price)} <small class="per-vial-inline">${perVial(p.price)}</small></div>
+        <button class="btn black small add-card-btn" type="button" data-v13-add="${p.sku}">Add</button>
+      </div>
+    </article>`;
+  }
+  function setupCatalogFilters() {
+    const filters = $(".filters");
+    if (filters) {
+      filters.innerHTML = `<h4>FILTER</h4><hr><strong>Category</strong>
+      <select data-v13-category><option value="all">All Categories</option>${CATEGORIES.map(c=>`<option value="${c}">${c}</option>`).join("")}</select>
+      <hr><strong>Search</strong><input data-v13-search placeholder="Search product, SKU, or MG"><button class="btn outline small" type="button" data-v13-reset>Reset</button>`;
+    }
+    const intro = $(".page-intro");
+    if (intro && !$(".v13-catalog-tools")) {
+      const tools = document.createElement("div");
+      tools.className = "v13-catalog-tools";
+      tools.innerHTML = `<input data-v13-search placeholder="Search product, SKU, or MG"><select data-v13-category><option value="all">All Categories</option>${CATEGORIES.map(c=>`<option value="${c}">${c}</option>`).join("")}</select>`;
+      intro.appendChild(tools);
+    }
+    $$("[data-v13-category],[data-v13-search],.sort,[data-sort]").forEach(el => {
+      el.addEventListener("input", renderCatalog);
+      el.addEventListener("change", renderCatalog);
+    });
+    $$("[data-v13-reset]").forEach(b => b.onclick = () => {
+      $$("[data-v13-category]").forEach(x=>x.value="all");
+      $$("[data-v13-search]").forEach(x=>x.value="");
+      renderCatalog();
+    });
+  }
+  function renderCatalog() {
+    const grid = $("[data-product-grid]");
+    if (!grid) return;
+    const cat = $("[data-v13-category]")?.value || "all";
+    const q = ($("[data-v13-search]")?.value || "").toLowerCase().trim();
+    const sort = $("[data-sort],.sort")?.value || "featured";
+    let list = [...REAL_PRODUCTS];
+    if (cat !== "all") list = list.filter(p => p.category === cat);
+    if (q) list = list.filter(p => (p.sku + " " + p.product + " " + p.mg + " " + p.category).toLowerCase().includes(q));
+    if (sort === "low") list.sort((a,b)=>a.price-b.price);
+    if (sort === "high") list.sort((a,b)=>b.price-a.price);
+    grid.innerHTML = list.map(productCard).join("");
+    const status = $("[data-catalog-status]");
+    if (status) status.textContent = "Showing " + list.length + " products";
+  }
+  function renderHome() {
+    const grid = $("[data-home-grid]");
+    if (grid) grid.innerHTML = REAL_PRODUCTS.filter(p => ["TR10","SM10","BC5","CP10"].includes(p.sku)).map(productCard).join("");
+  }
+  function renderDrawer() {
+    const drawer = $(".cart-drawer");
+    if (!drawer) return;
+    const cart = getCart();
+    $$(".cart-count").forEach(x => x.textContent = cart.reduce((a,b)=>a+(Number(b.qty)||1),0));
+    const items = $("[data-cart-items]");
+    if (items) {
+      items.innerHTML = cart.length ? cart.map((x,i)=>`<article class="drawer-item-clean">
+        <div class="drawer-item-top"><strong>${x.product || x.name}</strong><button type="button" data-v13-remove="${i}">×</button></div>
+        <div class="drawer-meta"><span class="drawer-vials">${x.vials || "10 Vials"}</span><span>${x.mg || x.size || ""} each</span><span>Qty: ${x.qty || 1}</span><span>${money((x.price || x.selectedPrice || 0) * (x.qty || 1))}</span></div>
+      </article>`).join("") : `<div class="drawer-empty">Your quote list is empty.</div>`;
+    }
+    Array.from(drawer.children).forEach(el => {
+      if (el.classList?.contains("drawer-actions-v11") || el.classList?.contains("drawer-actions-v12") || el.classList?.contains("drawer-actions-v13")) el.remove();
+      if (el.matches?.("a.btn")) el.remove();
+    });
+    const actions = document.createElement("div");
+    actions.className = "drawer-actions-v13";
+    actions.innerHTML = `<a class="btn black full" href="${sms(ORDER_NUMBER, cart.length ? orderText(cart) : "Hi PEPS GLOBAL, I want to place a research-use-only order. Please connect me with a human sales rep.")}">TEXT ORDER TO HUMAN SALES REP</a>
+    <a class="btn outline full" href="${sms(HUMAN_NUMBER, "Hi PEPS GLOBAL, I want to talk to a human global agent in English or Spanish.")}">TALK TO HUMAN GLOBAL AGENT EN/ES</a>
+    <a class="btn outline full" href="mailto:${EMAIL}?subject=PEPS%20GLOBAL%20Inquiry">EMAIL INQUIRY</a>`;
+    drawer.appendChild(actions);
+    $$("[data-v13-remove]").forEach(b=>b.onclick=()=>{const cart=getCart();cart.splice(Number(b.dataset.v13Remove),1);saveCart(cart);renderDrawer();});
+  }
+  function addItem(sku, qty=1) {
+    const p = REAL_PRODUCTS.find(x => x.sku === sku);
+    if (!p) return;
+    const cart = getCart();
+    cart.push({...p, qty, selectedPrice:p.price, size:p.mg});
+    saveCart(cart);
+    renderDrawer();
+    $(".cart-drawer")?.classList.add("open");
+  }
+  function setupAddButtons() {
+    document.addEventListener("click", e => {
+      const btn = e.target.closest("[data-v13-add]");
+      if (!btn) return;
+      e.preventDefault();
+      addItem(btn.dataset.v13Add || btn.dataset.sku);
+    });
+  }
+  function setupProductPage() {
+    if (!$("[data-product-page]")) return;
+    const slug = new URLSearchParams(location.search).get("item") || "bc5";
+    let selected = REAL_PRODUCTS.find(p => p.slug === slug || p.sku.toLowerCase() === slug) || REAL_PRODUCTS[0];
+    const group = REAL_PRODUCTS.filter(p => p.product === selected.product);
+    $("[data-product-title]") && ($("[data-product-title]").textContent = selected.product);
+    $("[data-product-breadcrumb]") && ($("[data-product-breadcrumb]").textContent = selected.product);
+    const img = $("[data-product-image]");
+    if (img) img.innerHTML = `<img src="${selected.image}" alt="${selected.product}">`;
+    const row = $(".size-row");
+    function choose(p) {
+      selected = p;
+      $$(".size-row .size").forEach(b => b.classList.toggle("active", b.dataset.sku === p.sku));
+      const price = $("[data-product-price]");
+      if (price) price.innerHTML = `${money(p.price)} <small class="per-vial-inline">${perVial(p.price)}</small>`;
+      let note = $(".selected-size-note");
+      if (!note) { note = document.createElement("p"); note.className = "selected-size-note"; row?.insertAdjacentElement("afterend", note); }
+      note.innerHTML = `<strong>${p.vials}</strong> package • <strong>${p.mg}</strong> each • <strong>${money(p.price)}</strong> <span>${perVial(p.price)}</span>`;
+      const textBtn = $("[data-text-product]");
+      if (textBtn) textBtn.href = sms(ORDER_NUMBER, `Hi PEPS GLOBAL, I am interested in ${p.sku} | ${p.product} | ${p.vials} | ${p.mg} each | ${money(p.price)} ${perVial(p.price)}. Please have a human sales rep confirm availability, COA documentation, shipping, and payment link. Research use only.`);
+    }
+    if (row) {
+      row.innerHTML = group.map(p=>`<button class="size ${p.sku===selected.sku ? "active" : ""}" type="button" data-sku="${p.sku}"><span class="size-vials">${p.vials}</span><span class="size-mg">${p.mg}</span><small>${money(p.price)} ${perVial(p.price)}</small></button>`).join("");
+      row.querySelectorAll(".size").forEach((b,i)=>b.onclick=()=>choose(group[i]));
+    }
+    choose(selected);
+    const qty = $("[data-qty]");
+    $$("[data-add-cart],[data-add-quote]").forEach(btn => btn.onclick = e => {
+      e.preventDefault();
+      addItem(selected.sku, Number(qty?.value || 1) || 1);
+    });
+  }
+  function setupPriceList() {
+    const table = $("[data-price-table]");
+    if (!table) return;
+    table.innerHTML = REAL_PRODUCTS.map(p=>`<tr data-category="${p.category}" data-name="${(p.sku+" "+p.product+" "+p.mg).toLowerCase()}">
+      <td><strong>${p.sku}</strong></td><td>${p.product}</td><td><span class="vials-pill">${p.vials}</span></td><td><span class="mg-pill">${p.mg} each</span></td><td><strong>${money(p.price)}</strong> <small class="per-vial-inline">${perVial(p.price)}</small></td><td><button class="btn black small" type="button" data-v13-add="${p.sku}">Add</button></td>
+    </tr>`).join("");
+    const search = $("[data-price-search]");
+    const cat = $("[data-category-filter]");
+    function filter() {
+      const q = (search?.value || "").toLowerCase();
+      const c = cat?.value || "all";
+      table.querySelectorAll("tr").forEach(row => row.style.display = ((!q || row.dataset.name.includes(q)) && (c === "all" || row.dataset.category === c)) ? "" : "none");
+    }
+    search?.addEventListener("input", filter);
+    cat?.addEventListener("change", filter);
+  }
+
+  setupCatalogFilters();
+  renderCatalog();
+  renderHome();
+  setupProductPage();
+  setupPriceList();
+  setupAddButtons();
+  renderDrawer();
+  document.addEventListener("click", () => setTimeout(renderDrawer, 40));
+})();
