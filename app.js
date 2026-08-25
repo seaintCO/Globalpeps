@@ -209,3 +209,250 @@ function pepsBuildPriceMessage(items) {
   document.addEventListener("click", () => setTimeout(updateTextSelectedButton, 50));
   setTimeout(updateTextSelectedButton, 400);
 })();
+
+
+
+// ---- V11 product size selector + clean quote drawer fix ----
+(function initV11ProductAndDrawerFix(){
+  const PRODUCT_VARIANTS = {
+    "wolverine":[{size:"10MG",price:385},{size:"20MG",price:670}],
+    "cjc-ipamorelin":[{size:"5MG",price:373},{size:"10MG",price:478}],
+    "bpc-157":[{size:"5MG",price:166},{size:"10MG",price:214}],
+    "ghk-cu":[{size:"50MG",price:148},{size:"100MG",price:181}],
+    "glow":[{size:"70MG",price:712},{size:"80MG",price:895}],
+    "mots-c":[{size:"10MG",price:283},{size:"20MG",price:451},{size:"40MG",price:775}],
+    "epithalon":[{size:"10MG",price:172},{size:"50MG",price:547}],
+    "cjc-1295":[{size:"5MG",price:652},{size:"10MG",price:814}],
+    "5-amino-1mq":[{size:"5MG",price:103},{size:"10MG",price:181}],
+    "enclomiphene":[{size:"12.5MG",price:null}],
+    "mk-677":[{size:"25MG",price:null}],
+    "mt-2":[{size:"10MG",price:null}],
+    "tesamorelin":[{size:"5MG",price:421},{size:"10MG",price:712},{size:"20MG",price:1183}]
+  };
+
+  const pg$ = (s,c=document)=>c.querySelector(s);
+  const pg$$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
+  const money = n => "$" + Number(n || 0).toLocaleString();
+  const langNow = () => (localStorage.getItem("peps_lang") || "en");
+  const businessNumber = "3054491784";
+  const smsLink = body => "sms:" + businessNumber + "?&body=" + encodeURIComponent(body);
+
+  function currentProduct(){
+    if (!pg$("[data-product-page]") || typeof PRODUCTS === "undefined") return null;
+    const slug = new URLSearchParams(location.search).get("item") || "bpc-157";
+    return PRODUCTS.find(x => x.slug === slug) || PRODUCTS[2];
+  }
+
+  let selectedVariant = null;
+
+  function updateProductTextLink(product){
+    const link = pg$("[data-text-product]");
+    if (!link || !product) return;
+    const lang = langNow();
+    const size = selectedVariant?.size || product.size || "N/A";
+    const price = selectedVariant?.price ? " | Price: " + money(selectedVariant.price) : "";
+    link.textContent = lang === "es" ? "CONSULTAR POR TEXTO" : "TEXT PRODUCT INQUIRY";
+    const body = lang === "es"
+      ? `Hola PEPS GLOBAL, me interesa ${product.name} (${size})${price} para uso de investigación. Por favor envíen disponibilidad, precio mayorista, COA aplicable, instrucciones de envío y link de pago.`
+      : `Hi PEPS GLOBAL, I’m interested in ${product.name} (${size})${price} for research use. Please send availability, wholesale pricing, applicable COA documentation, shipping instructions, and payment link.`;
+    link.href = smsLink(body);
+  }
+
+  function setSelectedVariant(product, variant){
+    selectedVariant = variant;
+    pg$$(".size-row .size").forEach(btn => {
+      const active = btn.dataset.v11Size === variant.size;
+      btn.classList.toggle("active", active);
+      btn.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+
+    const priceEl = pg$("[data-product-price]");
+    if (priceEl) {
+      priceEl.textContent = variant.price ? money(variant.price) : (product.price || "Text for pricing");
+    }
+
+    let note = pg$(".selected-size-note");
+    if (!note) {
+      note = document.createElement("p");
+      note.className = "selected-size-note";
+      pg$(".size-row")?.insertAdjacentElement("afterend", note);
+    }
+    note.textContent = variant.price
+      ? `Selected: ${variant.size} • ${money(variant.price)}`
+      : `Selected: ${variant.size} • Text for pricing`;
+
+    updateProductTextLink(product);
+  }
+
+  function setupProductSizeSelector(){
+    const product = currentProduct();
+    if (!product) return;
+
+    const row = pg$(".size-row");
+    if (!row) return;
+
+    const variants = PRODUCT_VARIANTS[product.slug] || [{size:product.size || "5MG", price:null}];
+    row.innerHTML = variants.map((v, i) =>
+      `<button class="size ${i === 0 ? "active" : ""}" type="button" data-v11-size="${v.size}" data-v11-price="${v.price ?? ""}" aria-pressed="${i === 0 ? "true" : "false"}">${v.size}</button>`
+    ).join("");
+
+    row.querySelectorAll(".size").forEach((btn, i) => {
+      btn.addEventListener("click", () => setSelectedVariant(product, variants[i]));
+    });
+
+    setSelectedVariant(product, variants[0]);
+
+    const qtyInput = pg$("[data-qty]");
+    const addPayload = () => ({
+      ...product,
+      size:selectedVariant?.size || product.size || "N/A",
+      price:selectedVariant?.price ? money(selectedVariant.price) : product.price,
+      selectedPrice:selectedVariant?.price || null,
+      qty:Number(qtyInput?.value || 1) || 1
+    });
+
+    pg$$("[data-add-cart],[data-add-quote]").forEach(btn => {
+      btn.onclick = function(event){
+        event.preventDefault();
+        const cart = getCart();
+        cart.push(addPayload());
+        saveCart(cart);
+        pg$(".cart-drawer")?.classList.add("open");
+        cleanRenderCart();
+      };
+    });
+  }
+
+  function cleanCartSmsBody(cart){
+    const lines = [
+      "Hi PEPS GLOBAL, I want to request a research-use-only order.",
+      "",
+      "Selected items:"
+    ];
+    let total = 0;
+    cart.forEach(item => {
+      const qty = Number(item.qty || 1);
+      const unit = Number(item.selectedPrice || 0);
+      if (unit) total += unit * qty;
+      const price = unit ? ` | Unit: ${money(unit)} | Line: ${money(unit * qty)}` : "";
+      lines.push(`- ${item.name || "Product"} | Size: ${item.size || "N/A"} | Qty: ${qty}${price}`);
+    });
+    if (total) {
+      lines.push("");
+      lines.push("Estimated total: " + money(total));
+    }
+    lines.push("");
+    lines.push("Please confirm availability, applicable COA documentation, shipping instructions, and send the payment link.");
+    lines.push("Research use only. Not for human or veterinary use.");
+    return lines.join("\n");
+  }
+
+  function cleanRenderCart(){
+    const drawer = pg$(".cart-drawer");
+    if (!drawer) return;
+
+    const cart = getCart();
+    pg$$(".cart-count").forEach(el => el.textContent = cart.reduce((sum, x) => sum + (Number(x.qty) || 1), 0));
+
+    const title = pg$(".drawer-head strong");
+    if (title) title.textContent = langNow() === "es" ? "Tu lista de cotización" : "Your quote list";
+
+    const items = pg$("[data-cart-items]");
+    if (items) {
+      if (!cart.length) {
+        items.innerHTML = `<div class="drawer-empty">${langNow() === "es" ? "Tu lista está vacía." : "Your quote list is empty."}</div>`;
+      } else {
+        items.innerHTML = cart.map((item, i) => {
+          const qty = Number(item.qty || 1);
+          const unit = Number(item.selectedPrice || 0);
+          const priceLine = unit ? `<span>${money(unit)} each</span><span>${money(unit * qty)} line</span>` : `<span>${item.price || ""}</span>`;
+          return `
+            <article class="drawer-item-clean">
+              <div class="drawer-item-top">
+                <strong>${item.name || "Product"}</strong>
+                <button type="button" aria-label="Remove item" data-remove-cart="${i}">×</button>
+              </div>
+              <div class="drawer-meta">
+                <span>Size: ${item.size || "N/A"}</span>
+                <span>Qty: ${qty}</span>
+                ${priceLine}
+              </div>
+            </article>
+          `;
+        }).join("");
+      }
+    }
+
+    // remove messy duplicate direct buttons created by older versions
+    Array.from(drawer.children).forEach(child => {
+      if (child.classList?.contains("drawer-actions-v11")) child.remove();
+      if (child.matches?.("a.btn")) child.remove();
+    });
+
+    const actions = document.createElement("div");
+    actions.className = "drawer-actions-v11";
+
+    const textBtn = document.createElement("a");
+    textBtn.className = "btn black full";
+    textBtn.textContent = langNow() === "es" ? "ENVIAR SELECCIÓN POR TEXTO" : "TEXT SELECTED ITEMS";
+    textBtn.href = cart.length
+      ? smsLink(cleanCartSmsBody(cart))
+      : smsLink("Hi PEPS GLOBAL, I want to place a research-use-only order. Please send product availability, instructions, and payment link.");
+
+    const browse = document.createElement("a");
+    browse.className = "btn outline full";
+    browse.href = "catalog.html";
+    browse.textContent = langNow() === "es" ? "SEGUIR COMPRANDO" : "CONTINUE SHOPPING";
+
+    actions.appendChild(textBtn);
+    actions.appendChild(browse);
+    drawer.appendChild(actions);
+
+    pg$$("[data-remove-cart]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const c = getCart();
+        c.splice(Number(btn.dataset.removeCart), 1);
+        saveCart(c);
+        cleanRenderCart();
+      });
+    });
+  }
+
+  // override old renderCart so saveCart() uses the clean drawer
+  if (typeof renderCart === "function") {
+    renderCart = cleanRenderCart;
+    window.renderCart = cleanRenderCart;
+  }
+
+  // fix nav labels so Sell Your Own does not become duplicated About
+  function fixNavLabels(){
+    const es = langNow() === "es";
+    const rightLabels = es
+      ? ["Envíos","Mayoreo","Vende Tu Marca","Nosotros"]
+      : ["Shipping","Wholesale","Sell Your Own","About"];
+    pg$$(".nav-right > a:not(.icon-btn)").forEach((a, i) => {
+      if (rightLabels[i]) a.textContent = rightLabels[i];
+    });
+    const mobileLabels = es
+      ? ["Inicio","Catálogo","Búsqueda COA","Calidad","Envíos","Mayoreo","Crea una Compañía","Vende Tu Marca","Nosotros","Contacto","Mi cuenta"]
+      : ["Home","Catalog","COA Lookup","Quality","Shipping","Wholesale","Start a Company","Sell Your Own","About","Contact","My account"];
+    pg$$(".mobile-menu > a").forEach((a, i) => {
+      if (mobileLabels[i]) a.textContent = mobileLabels[i];
+    });
+  }
+
+  if (typeof setLanguage === "function") {
+    const oldSetLanguage = setLanguage;
+    setLanguage = function(lang){
+      oldSetLanguage(lang);
+      fixNavLabels();
+      setupProductSizeSelector();
+      cleanRenderCart();
+    };
+    window.setLanguage = setLanguage;
+  }
+
+  setupProductSizeSelector();
+  cleanRenderCart();
+  fixNavLabels();
+})();

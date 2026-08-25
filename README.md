@@ -71,3 +71,10 @@ Updated visuals include BPC-157, GHK-Cu, CJC-1295/Ipamorelin, Wolverine, Glow, M
 - COA page now focuses on text-to-request.
 - Cart drawer adds a text-selected-items button.
 - Payment link placeholder in app.js: PASTE_PAYMENT_LINK_HERE. Replace it with the real pay link when available.
+
+
+## V11 fixes
+- Product size buttons now update active state, selected size, displayed price, cart payload, and text inquiry payload.
+- Quote drawer cleaned up with one clear Text Selected Items button and one Continue Shopping button.
+- Removed overlapping/duplicate quote buttons from older versions.
+- Fixed top navigation label issue where Sell Your Own could display as About.
