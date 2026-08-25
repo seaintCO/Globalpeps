@@ -93,3 +93,10 @@ Updated visuals include BPC-157, GHK-Cu, CJC-1295/Ipamorelin, Wolverine, Glow, M
 - Product cards show 10 Vials first, MG each second.
 - Main price includes ($/vial) next to it.
 - Product detail variants, quote drawer, and SMS order text use the same real pricing.
+
+## V14 logo + image update
+- Added the supplied PEPS GLOBAL globe/vial logo to header, footer, age gate, and favicon.
+- Replaced main vial photography with the newly generated PEPS GLOBAL branded product photos.
+- Uses dedicated branded images for BPC-157, Tirzepatide, Semaglutide, GHK-Cu, CJC/Ipamorelin, Wolverine/BPC+TB, GLOW, MOTS-c, Epithalon, and Tesamorelin.
+- Product families without a dedicated photo use a neutral PEPS GLOBAL branded research-compound visual so an incorrect compound name is never shown.
+- Rebuilt the group/catalog imagery using the new branded vial photography.

@@ -405,3 +405,36 @@
 .drawer-actions-v13{display:grid;gap:10px;margin-top:auto;padding-top:18px;border-top:1px solid var(--line)}
 .drawer-actions-v13 .btn{text-align:center}
 .drawer-vials{background:#111!important;color:#fff!important;border-color:#111!important;font-weight:700}
+
+/* V14 official PEPS GLOBAL logo + unified branded imagery */
+.brand-logo{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:auto;
+  min-width:148px;
+  line-height:1;
+}
+.brand-logo img{
+  display:block;
+  width:190px;
+  max-height:70px;
+  object-fit:contain;
+}
+.brand-footer.brand-logo{
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+}
+.brand-footer.brand-logo img{width:210px;max-height:88px}
+.gate-brand.brand-logo img{width:250px;max-height:120px;margin:0 auto}
+.product-image.real img{
+  object-fit:contain;
+  background:#f7f7f5;
+}
+.v13-product-card .product-image.real{
+  background:#f7f7f5;
+}
+@media(max-width:950px){
+  .brand-logo{min-width:0}
+  .brand-logo img{width:150px;max-height:54px}
+}
