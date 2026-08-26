@@ -100,3 +100,11 @@ Updated visuals include BPC-157, GHK-Cu, CJC-1295/Ipamorelin, Wolverine, Glow, M
 - Uses dedicated branded images for BPC-157, Tirzepatide, Semaglutide, GHK-Cu, CJC/Ipamorelin, Wolverine/BPC+TB, GLOW, MOTS-c, Epithalon, and Tesamorelin.
 - Product families without a dedicated photo use a neutral PEPS GLOBAL branded research-compound visual so an incorrect compound name is never shown.
 - Rebuilt the group/catalog imagery using the new branded vial photography.
+
+## V15 grouped catalog + procurement wording
+- One card per product family instead of repeated variants.
+- Shows 10 Vials, dosage/volume options, starting price per vial, and honest kit-total range.
+- Added new product families and pricing.
+- Reworded quote buttons for procurement/research quote requests.
+- Added wishlist and first institutional quote popup.
+- Changed Start Your Own / Sell Your Own to Become a Supplier.
