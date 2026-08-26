@@ -1219,9 +1219,6 @@ function pepsBuildPriceMessage(items) {
     });
   }
 
-  function getCart() { try { return JSON.parse(localStorage.getItem("peps_cart")||"[]"); } catch(e) { return []; } }
-  function setCart(c) { localStorage.setItem("peps_cart",JSON.stringify(c)); localStorage.setItem("wop_cart",JSON.stringify(c)); }
-
   function renderDrawer() {
     const drawer = $(".cart-drawer"); if (!drawer) return;
     const c = getCart();
@@ -1255,4 +1252,16 @@ function pepsBuildPriceMessage(items) {
   renderDrawer();
   wishlistPopup();
   document.addEventListener("click",()=>setTimeout(()=>{renderDrawer();cleanNav();},40));
+})();
+
+// ---- V18 final catalog ownership safeguard ----
+(() => {
+  window.addEventListener("load", () => {
+    document.querySelectorAll(".v16-catalog-controls, .v15-catalog-tools, .v13-catalog-tools").forEach(el => {
+      el.style.display = "none";
+      el.style.pointerEvents = "none";
+    });
+    const grid = document.querySelector("[data-product-grid]");
+    if (grid) grid.classList.add("v18-catalog-live");
+  });
 })();

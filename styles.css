@@ -532,3 +532,7 @@
 .product-blend-specs{border:1px solid var(--line);border-radius:12px;background:#fafafa;padding:12px;margin-top:12px}
 .product-blend-specs p{color:#666;line-height:1.45;margin:6px 0 0}
 @media(max-width:700px){.v17-grid{grid-template-columns:1fr!important}.v17-card{min-height:auto}.v17-controls{display:grid;grid-template-columns:1fr}.v17-controls input,.v17-controls select{width:100%}}
+
+/* V18 catalog restore safeguard */
+.v18-catalog-live{display:grid!important;visibility:visible!important;opacity:1!important}
+.v17-grid{visibility:visible!important;opacity:1!important}

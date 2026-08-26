@@ -124,3 +124,9 @@ Updated visuals include BPC-157, GHK-Cu, CJC-1295/Ipamorelin, Wolverine, Glow, M
 - Removed consumer-facing blend nicknames from categories/product titles.
 - Added Blend category and blend specifications.
 - Added more product family images/generic vial images to avoid logo-only cards.
+
+## V18 catalog restore
+- Fixed the V17 JavaScript declaration collision that stopped the entire catalog renderer.
+- Catalog product family cards render again.
+- Preserves V17 grouped products, Blend specs, procurement badges, product imagery, quote workflow, and card sizing.
+- Legacy catalog control layers are suppressed after load to prevent them from overwriting the grouped catalog.
