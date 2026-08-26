@@ -108,3 +108,19 @@ Updated visuals include BPC-157, GHK-Cu, CJC-1295/Ipamorelin, Wolverine, Glow, M
 - Reworded quote buttons for procurement/research quote requests.
 - Added wishlist and first institutional quote popup.
 - Changed Start Your Own / Sell Your Own to Become a Supplier.
+
+
+## V16 catalog dropdown fix
+- Rebuilt catalog controls with safe dropdowns.
+- Fixed issue where Featured / Low-to-High / High-to-Low or Category clicks could open the first Bac.water product.
+- Dropdowns now sit above the catalog grid with proper z-index and event handling.
+- Old duplicate dropdowns are hidden.
+
+## V17 final fixes
+- Removed Become a Supplier/Sell Your Own navigation.
+- Fixed dropdown/search accidental redirects to Bac.water.
+- Catalog cards are narrower, equal-height, and more professional.
+- Procurement badge is fixed at the top without changing card sizes.
+- Removed consumer-facing blend nicknames from categories/product titles.
+- Added Blend category and blend specifications.
+- Added more product family images/generic vial images to avoid logo-only cards.

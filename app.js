@@ -903,3 +903,356 @@ function pepsBuildPriceMessage(items) {
   function patchLabels(){$$('a,button').forEach(el=>{let t=el.textContent.trim();if(t==='TEXT SELECTED ITEMS')el.textContent='Send Quote Summary';if(t==='TEXT ORDER TO HUMAN SALES REP')el.textContent='Submit Research Quote Request';if(t==='TALK TO HUMAN GLOBAL AGENT EN/ES')el.textContent='Speak with a Procurement Agent (EN/ES)';if(t==='EMAIL INQUIRY')el.textContent='Email Institutional Inquiry';if(t.includes('Start')||t.includes('Sell Your Own'))el.textContent='Become a Supplier'});$$('a').forEach(a=>{if(a.href.includes('start-company')||a.href.includes('become-wholesaler'))a.href='become-supplier.html'})}
   setupCatalog();renderCatalog();renderHome();setupProduct();bindWishlist();renderDrawer();patchLabels();setTimeout(()=>showQuotePopup(false),1600);document.addEventListener('click',()=>setTimeout(()=>{renderDrawer();patchLabels()},40));
 })();
+
+
+
+// ---- V16 catalog dropdown click/overlay fix ----
+(() => {
+  const $ = (s,c=document)=>c.querySelector(s);
+  const $$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
+
+  function money(n){ return "$" + Number(n || 0).toLocaleString(); }
+  function kitRange(g){
+    if (!g) return "";
+    return g.minTotal === g.maxTotal ? money(g.minTotal) : `${money(g.minTotal)} – ${money(g.maxTotal)}`;
+  }
+
+  // Pull grouped catalog from V15 if available by reading rendered cards fallback not needed.
+  const getGroups = () => {
+    if (window.CATALOG_GROUPS) return window.CATALOG_GROUPS;
+    if (typeof CATALOG_GROUPS !== "undefined") return CATALOG_GROUPS;
+    if (window.PEPS_REAL_PRODUCTS) return window.PEPS_REAL_PRODUCTS;
+    if (window.PRODUCTS) return window.PRODUCTS;
+    return [];
+  };
+
+  function statusClass(status){
+    const s = String(status || "").toLowerCase();
+    if (s.includes("limited")) return "limited";
+    if (s.includes("request")) return "request";
+    return "available";
+  }
+
+  function groupedCard(g){
+    const isGrouped = Array.isArray(g.options);
+    if (!isGrouped) {
+      const name = g.product || g.name || "Product";
+      return `<article class="v15-card v16-card">
+        <a class="v15-img" href="product.html?item=${g.slug || ""}"><img src="${g.image || "assets/generic-peps-global-product.png"}" alt="${name}"></a>
+        <div class="v15-body">
+          <div class="v15-top"><span class="vials-pill">${g.vials || "10 Vials"}</span><button class="v15-heart" type="button">♡</button></div>
+          <h3><a href="product.html?item=${g.slug || ""}">${name}</a></h3>
+          <p class="v15-kind">${g.category || "Research Compound"}</p>
+          <div class="v15-options"><strong>Dosage Options</strong><div><span>${g.mg || g.size || ""}</span></div></div>
+          <p class="v15-price"><strong>${money(g.price || g.min || 0)}</strong><span>${g.perVial ? "($" + Number(g.perVial).toFixed(2) + "/vial)" : ""}</span></p>
+          <a class="btn outline full" href="product.html?item=${g.slug || ""}">View Options</a>
+        </div>
+      </article>`;
+    }
+    const opts = g.options.map(o => `<span>${o.label}</span>`).join("");
+    return `<article class="v15-card v16-card" data-status="${statusClass(g.status)}">
+      <a class="v15-img" href="product.html?item=${g.slug}"><img src="${g.image}" alt="${g.name}"></a>
+      <div class="v15-body">
+        <div class="v15-top"><span class="vials-pill">${g.badge || "10 Vials"}</span><button class="v15-heart" type="button" data-wish="${g.slug}" title="Save to wishlist">♡</button></div>
+        <h3><a href="product.html?item=${g.slug}">${g.name}</a></h3>
+        <p class="v15-kind">${g.kind || "Research Compound"}</p>
+        <div class="v15-options"><strong>${g.optionLabel || "Dosage Options"}</strong><div>${opts}</div></div>
+        <p class="v15-price"><strong>Starting at $${Number(g.startPerVial || 0).toFixed(2)} / vial</strong><span>Kit Total: ${kitRange(g)}</span></p>
+        <p class="v15-status ${statusClass(g.status)}">${g.status || "Available"}</p>
+        <a class="btn outline full" href="product.html?item=${g.slug}">View Options</a>
+      </div>
+    </article>`;
+  }
+
+  function ensureControls(){
+    const intro = $(".page-intro");
+    if (intro && !$(".v16-catalog-controls")) {
+      const controls = document.createElement("div");
+      controls.className = "v16-catalog-controls";
+      controls.innerHTML = `
+        <input type="search" data-v16-search placeholder="Search product, SKU, or MG">
+        <select data-v16-sort aria-label="Sort catalog">
+          <option value="featured">Featured</option>
+          <option value="low">Low to High</option>
+          <option value="high">High to Low</option>
+        </select>
+        <select data-v16-category aria-label="Category">
+          <option value="all">All Categories</option>
+        </select>
+        <select data-v16-status aria-label="Status">
+          <option value="all">All Statuses</option>
+          <option value="available">Available</option>
+          <option value="limited">Limited Procurement</option>
+          <option value="request">Request Availability</option>
+        </select>`;
+      intro.appendChild(controls);
+    }
+
+    // Hide old controls that were causing accidental card clicks, but keep the status if it existed.
+    $$(".sort, [data-sort], [data-category-filter], [data-v15-status], [data-v15-search], [data-price-search], [data-v13-category], [data-v13-search]").forEach(el => {
+      const wrapper = el.closest(".v16-catalog-controls");
+      if (!wrapper) {
+        el.classList.add("v16-hidden-old-control");
+        el.setAttribute("tabindex", "-1");
+      }
+    });
+
+    const cats = [...new Set(getGroups().map(g => g.category || g.kind || "Research Compounds").filter(Boolean))].sort();
+    $$("[data-v16-category]").forEach(select => {
+      const current = select.value || "all";
+      select.innerHTML = `<option value="all">All Categories</option>` + cats.map(c => `<option value="${c}">${c}</option>`).join("");
+      select.value = cats.includes(current) ? current : "all";
+    });
+  }
+
+  function sortVal(g){
+    if (Array.isArray(g.options)) return Number(g.minTotal || 0);
+    return Number(g.price || g.min || 0);
+  }
+
+  function renderSafeCatalog(){
+    const grid = $("[data-product-grid]");
+    if (!grid) return;
+
+    const q = ($("[data-v16-search]")?.value || "").toLowerCase().trim();
+    const sort = $("[data-v16-sort]")?.value || "featured";
+    const cat = $("[data-v16-category]")?.value || "all";
+    const status = $("[data-v16-status]")?.value || "all";
+
+    let list = [...getGroups()];
+
+    if (q) {
+      list = list.filter(g => {
+        const optionText = Array.isArray(g.options) ? g.options.map(o => `${o.sku || ""} ${o.label || ""}`).join(" ") : "";
+        return `${g.name || ""} ${g.product || ""} ${g.kind || ""} ${g.category || ""} ${optionText}`.toLowerCase().includes(q);
+      });
+    }
+    if (cat !== "all") {
+      list = list.filter(g => (g.category || g.kind || "Research Compounds") === cat);
+    }
+    if (status !== "all") {
+      list = list.filter(g => statusClass(g.status) === status);
+    }
+    if (sort === "low") list.sort((a,b)=>sortVal(a)-sortVal(b));
+    if (sort === "high") list.sort((a,b)=>sortVal(b)-sortVal(a));
+
+    grid.innerHTML = list.map(groupedCard).join("");
+
+    const statusText = $("[data-catalog-status]");
+    if (statusText) statusText.textContent = `Showing ${list.length} research categories`;
+
+    // Make sure new product card links only open when user clicks actual card/button, not dropdown area.
+    $$(".v16-catalog-controls select, .v16-catalog-controls input").forEach(el => {
+      ["click","mousedown","mouseup","pointerdown","pointerup"].forEach(evt => {
+        el.addEventListener(evt, e => e.stopPropagation());
+      });
+    });
+  }
+
+  function bindControls(){
+    ensureControls();
+    $$("[data-v16-search], [data-v16-sort], [data-v16-category], [data-v16-status]").forEach(el => {
+      el.addEventListener("click", e => e.stopPropagation());
+      el.addEventListener("change", e => {
+        e.preventDefault();
+        e.stopPropagation();
+        renderSafeCatalog();
+      });
+      el.addEventListener("input", e => {
+        e.preventDefault();
+        e.stopPropagation();
+        renderSafeCatalog();
+      });
+    });
+    renderSafeCatalog();
+  }
+
+  // Run after previous V15 renderers so this wins.
+  setTimeout(bindControls, 50);
+  setTimeout(bindControls, 300);
+})();
+
+
+
+// ---- V17 final UX cleanup ----
+(() => {
+  const CATALOG_GROUPS = [{"slug": "bac-water", "name": "Bac.water", "kind": "Research Supply", "category": "Research Supply", "optionLabel": "Volume Options", "badge": "10 Vials", "options": [{"sku": "WA3", "label": "3ML", "price": 77, "perVial": 7.7}, {"sku": "WA10", "label": "10ML", "price": 83, "perVial": 8.3}], "startPerVial": 7.7, "minTotal": 77, "maxTotal": 83, "image": "assets/bac-water-vial.png", "status": "Available", "specs": ""}, {"slug": "tirzepatide", "name": "Tirzepatide", "kind": "GLP Research Compound", "category": "GLP Research Compound", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "TRS", "label": "5MG", "price": 137, "perVial": 13.7}, {"sku": "TR10", "label": "10MG", "price": 224, "perVial": 22.4}, {"sku": "TR15", "label": "15MG", "price": 296, "perVial": 29.6}, {"sku": "TR20", "label": "20MG", "price": 377, "perVial": 37.7}, {"sku": "TR30", "label": "30MG", "price": 479, "perVial": 47.9}, {"sku": "TR40", "label": "40MG", "price": 599, "perVial": 59.9}, {"sku": "TR50", "label": "50MG", "price": 701, "perVial": 70.1}, {"sku": "TR60", "label": "60MG", "price": 803, "perVial": 80.3}, {"sku": "TR100", "label": "100MG", "price": 1220, "perVial": 122.0}], "startPerVial": 13.7, "minTotal": 137, "maxTotal": 1220, "image": "assets/tirzepatide-vial.png", "status": "Limited Procurement", "specs": ""}, {"slug": "semaglutide", "name": "Semaglutide", "kind": "GLP Research Compound", "category": "GLP Research Compound", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "SM10", "label": "10MG", "price": 221, "perVial": 22.1}, {"sku": "SM20", "label": "20MG", "price": 308, "perVial": 30.8}], "startPerVial": 22.1, "minTotal": 221, "maxTotal": 308, "image": "assets/semaglutide-vial.png", "status": "Available", "specs": ""}, {"slug": "bpc-157", "name": "BPC 157", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "BC5", "label": "5MG", "price": 146, "perVial": 14.6}, {"sku": "BC10", "label": "10MG", "price": 194, "perVial": 19.4}], "startPerVial": 14.6, "minTotal": 146, "maxTotal": 194, "image": "assets/bpc-157-vial.png", "status": "Available", "specs": ""}, {"slug": "bpc-157-tb500", "name": "BPC 157 + TB500", "kind": "Blend", "category": "Blend", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "BB10", "label": "10MG", "price": 365, "perVial": 36.5}, {"sku": "BB20", "label": "20MG", "price": 650, "perVial": 65.0}], "startPerVial": 36.5, "minTotal": 365, "maxTotal": 650, "image": "assets/blend-vial.png", "status": "Request Availability", "specs": "BPC-157 + TB-500 research blend."}, {"slug": "tb500", "name": "TB500", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "BT5", "label": "5MG", "price": 335, "perVial": 33.5}, {"sku": "BT10", "label": "10MG", "price": 563, "perVial": 56.3}], "startPerVial": 33.5, "minTotal": 335, "maxTotal": 563, "image": "assets/generic-vial-product.png", "status": "Available", "specs": ""}, {"slug": "cjc-ipa", "name": "CJC 1295 no DAC + Ipamorelin", "kind": "Blend", "category": "Blend", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "CP10", "label": "10MG", "price": 353, "perVial": 35.3}], "startPerVial": 35.3, "minTotal": 353, "maxTotal": 353, "image": "assets/cjc-ipamorelin-vial.png", "status": "Available", "specs": "CJC 1295 without DAC 5mg + Ipamorelin 5mg per vial / 10mg total."}, {"slug": "cjc-dac", "name": "CJC1295 with DAC", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "CD5", "label": "5MG", "price": 632, "perVial": 63.2}, {"sku": "CD10", "label": "10MG", "price": 794, "perVial": 79.4}], "startPerVial": 63.2, "minTotal": 632, "maxTotal": 794, "image": "assets/cjc-ipamorelin-vial.png", "status": "Request Availability", "specs": ""}, {"slug": "cjc-no-dac", "name": "CJC 1295 without DAC", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "CND5", "label": "5MG", "price": 242, "perVial": 24.2}, {"sku": "CND10", "label": "10MG", "price": 458, "perVial": 45.8}], "startPerVial": 24.2, "minTotal": 242, "maxTotal": 458, "image": "assets/cjc-ipamorelin-vial.png", "status": "Available", "specs": ""}, {"slug": "ipamorelin", "name": "Ipamorelin", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "IP5", "label": "5MG", "price": 146, "perVial": 14.6}, {"sku": "IP10", "label": "10MG", "price": 218, "perVial": 21.8}], "startPerVial": 14.6, "minTotal": 146, "maxTotal": 218, "image": "assets/cjc-ipamorelin-vial.png", "status": "Available", "specs": ""}, {"slug": "retatrutide", "name": "Retatrutide", "kind": "GLP Research Compound", "category": "GLP Research Compound", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "RT5", "label": "5MG", "price": 170, "perVial": 17.0}, {"sku": "RT10", "label": "10MG", "price": 272, "perVial": 27.2}, {"sku": "RT15", "label": "15MG", "price": 368, "perVial": 36.8}, {"sku": "RT20", "label": "20MG", "price": 464, "perVial": 46.4}, {"sku": "RT30", "label": "30MG", "price": 638, "perVial": 63.8}, {"sku": "RT40", "label": "40MG", "price": 797, "perVial": 79.7}, {"sku": "RT50", "label": "50MG", "price": 938, "perVial": 93.8}, {"sku": "RT60", "label": "60MG", "price": 1082, "perVial": 108.2}], "startPerVial": 17.0, "minTotal": 170, "maxTotal": 1082, "image": "assets/retatrutide-vial.png", "status": "Limited Procurement", "specs": ""}, {"slug": "ghk-cu", "name": "GHK-Cu", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "CU50", "label": "50MG", "price": 128, "perVial": 12.8}, {"sku": "CU100", "label": "100MG", "price": 161, "perVial": 16.1}], "startPerVial": 12.8, "minTotal": 128, "maxTotal": 161, "image": "assets/ghk-cu-vial.png", "status": "Available", "specs": ""}, {"slug": "sermorelin", "name": "Sermorelin", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "SMO5", "label": "5MG", "price": 272, "perVial": 27.2}, {"sku": "SMO10", "label": "10MG", "price": 488, "perVial": 48.8}], "startPerVial": 27.2, "minTotal": 272, "maxTotal": 488, "image": "assets/generic-vial-product.png", "status": "Available", "specs": ""}, {"slug": "tesamorelin", "name": "Tesamorelin", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "TSM5", "label": "5MG", "price": 401, "perVial": 40.1}, {"sku": "TSM10", "label": "10MG", "price": 692, "perVial": 69.2}, {"sku": "TSM20", "label": "20MG", "price": 1163, "perVial": 116.3}], "startPerVial": 40.1, "minTotal": 401, "maxTotal": 1163, "image": "assets/tesamorelin-hero.png", "status": "Request Availability", "specs": ""}, {"slug": "nad-plus", "name": "NAD+", "kind": "Research Compound", "category": "Research Compound", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "NJ100", "label": "100MG", "price": 146, "perVial": 14.6}, {"sku": "NJ500", "label": "500MG", "price": 203, "perVial": 20.3}, {"sku": "NJ1000", "label": "1000MG", "price": 260, "perVial": 26.0}], "startPerVial": 14.6, "minTotal": 146, "maxTotal": 260, "image": "assets/nad-vial.png", "status": "Available", "specs": ""}, {"slug": "blend-g70", "name": "Blend G70", "kind": "Blend", "category": "Blend", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "G70", "label": "70MG", "price": 692, "perVial": 69.2}], "startPerVial": 69.2, "minTotal": 692, "maxTotal": 692, "image": "assets/blend-vial.png", "status": "Request Availability", "specs": "GHK-Cu 50mg + BPC-157 10mg + TB-500 10mg."}, {"slug": "blend-k80", "name": "Blend K80", "kind": "Blend", "category": "Blend", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "K80", "label": "80MG", "price": 875, "perVial": 87.5}], "startPerVial": 87.5, "minTotal": 875, "maxTotal": 875, "image": "assets/blend-vial.png", "status": "Request Availability", "specs": "GHK-Cu 50mg + BPC-157 10mg + TB-500 10mg + KPV 10mg."}, {"slug": "igf-1-lr3", "name": "IGF-1 LR3", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "IG1", "label": "1MG", "price": 737, "perVial": 73.7}], "startPerVial": 73.7, "minTotal": 737, "maxTotal": 737, "image": "assets/generic-vial-product.png", "status": "Limited Procurement", "specs": ""}, {"slug": "mots-c", "name": "MOTS-c", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "MS10", "label": "10MG", "price": 263, "perVial": 26.3}, {"sku": "MS20", "label": "20MG", "price": 431, "perVial": 43.1}, {"sku": "MS40", "label": "40MG", "price": 755, "perVial": 75.5}], "startPerVial": 26.3, "minTotal": 263, "maxTotal": 755, "image": "assets/mots-c-vial.png", "status": "Available", "specs": ""}, {"slug": "epithalon", "name": "Epithalon", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "ET10", "label": "10MG", "price": 152, "perVial": 15.2}, {"sku": "ET50", "label": "50MG", "price": 527, "perVial": 52.7}], "startPerVial": 15.2, "minTotal": 152, "maxTotal": 527, "image": "assets/epithalon-vial.png", "status": "Available", "specs": ""}, {"slug": "cagrilintide", "name": "Cagrilintide", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "CGL5", "label": "5MG", "price": 479, "perVial": 47.9}, {"sku": "CGL10", "label": "10MG", "price": 770, "perVial": 77.0}], "startPerVial": 47.9, "minTotal": 479, "maxTotal": 770, "image": "assets/generic-vial-product.png", "status": "Request Availability", "specs": ""}, {"slug": "5-amino-1mq", "name": "5-AMINO-1MQ", "kind": "Research Compound", "category": "Research Compound", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "5AM", "label": "5MG", "price": 83, "perVial": 8.3}, {"sku": "10AM", "label": "10MG", "price": 161, "perVial": 16.1}], "startPerVial": 8.3, "minTotal": 83, "maxTotal": 161, "image": "assets/generic-vial-product.png", "status": "Available", "specs": ""}, {"slug": "aod9604", "name": "AOD9604", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "AOD5", "label": "5MG", "price": 311, "perVial": 31.1}, {"sku": "AOD10", "label": "10MG", "price": 545, "perVial": 54.5}], "startPerVial": 31.1, "minTotal": 311, "maxTotal": 545, "image": "assets/aod-vial.png", "status": "Request Availability", "specs": ""}, {"slug": "pt141", "name": "PT141", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "PT10", "label": "10MG", "price": 257, "perVial": 25.7}], "startPerVial": 25.7, "minTotal": 257, "maxTotal": 257, "image": "assets/pt141-vial.png", "status": "Available", "specs": ""}, {"slug": "lemon-bottle", "name": "Lemon Bottle", "kind": "Research Supply", "category": "Research Supply", "optionLabel": "Volume Options", "badge": "10 Vials", "options": [{"sku": "LB10", "label": "10ML", "price": 209, "perVial": 20.9}], "startPerVial": 20.9, "minTotal": 209, "maxTotal": 209, "image": "assets/generic-vial-product.png", "status": "Request Availability", "specs": ""}, {"slug": "melanotan-ii", "name": "Melanotan II", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "MT2-10", "label": "10MG", "price": 194, "perVial": 19.4}], "startPerVial": 19.4, "minTotal": 194, "maxTotal": 194, "image": "assets/generic-vial-product.png", "status": "Available", "specs": ""}, {"slug": "dsip", "name": "DSIP", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "DSIP5", "label": "5MG", "price": 176, "perVial": 17.6}, {"sku": "DSIP10", "label": "10MG", "price": 305, "perVial": 30.5}], "startPerVial": 17.6, "minTotal": 176, "maxTotal": 305, "image": "assets/dsip-vial.png", "status": "Available", "specs": ""}, {"slug": "foxo4-dri", "name": "FOXO4-DRI", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "FOXO10", "label": "10MG", "price": 1130, "perVial": 113.0}], "startPerVial": 113.0, "minTotal": 1130, "maxTotal": 1130, "image": "assets/generic-vial-product.png", "status": "Limited Procurement", "specs": ""}, {"slug": "l-carnitine", "name": "L-Carnitine", "kind": "Research Compound", "category": "Research Compound", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "LC1200", "label": "1200MG", "price": 209, "perVial": 20.9}], "startPerVial": 20.9, "minTotal": 209, "maxTotal": 209, "image": "assets/lcarnitine-vial.png", "status": "Available", "specs": ""}, {"slug": "glutathione", "name": "Glutathione", "kind": "Research Compound", "category": "Research Compound", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "GLUT600", "label": "600MG", "price": 104, "perVial": 10.4}, {"sku": "GLUT1500", "label": "1500MG", "price": 137, "perVial": 13.7}], "startPerVial": 10.4, "minTotal": 104, "maxTotal": 137, "image": "assets/glutathione-vial.png", "status": "Available", "specs": ""}, {"slug": "lipo-c", "name": "Lipo-C", "kind": "Research Compound", "category": "Research Compound", "optionLabel": "Volume Options", "badge": "10 Vials", "options": [{"sku": "LIPO10", "label": "10ML", "price": 209, "perVial": 20.9}], "startPerVial": 20.9, "minTotal": 209, "maxTotal": 209, "image": "assets/generic-vial-product.png", "status": "Available", "specs": ""}, {"slug": "mic-lipo-c-b12", "name": "MIC (Lipo-C with B12)", "kind": "Research Compound", "category": "Research Compound", "optionLabel": "Volume Options", "badge": "10 Vials", "options": [{"sku": "MIC10", "label": "10ML", "price": 175, "perVial": 17.5}], "startPerVial": 17.5, "minTotal": 175, "maxTotal": 175, "image": "assets/generic-vial-product.png", "status": "Available", "specs": ""}, {"slug": "b12", "name": "B12", "kind": "Research Compound", "category": "Research Compound", "optionLabel": "Volume Options", "badge": "10 Vials", "options": [{"sku": "B12-10", "label": "10ML", "price": 191, "perVial": 19.1}], "startPerVial": 19.1, "minTotal": 191, "maxTotal": 191, "image": "assets/b12-vial.png", "status": "Available", "specs": ""}, {"slug": "vip", "name": "VIP", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "VIP10", "label": "10MG", "price": 497, "perVial": 49.7}], "startPerVial": 49.7, "minTotal": 497, "maxTotal": 497, "image": "assets/generic-vial-product.png", "status": "Request Availability", "specs": ""}, {"slug": "ahk-cu", "name": "AHK-CU", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "AHK100", "label": "100MG", "price": 263, "perVial": 26.3}], "startPerVial": 26.3, "minTotal": 263, "maxTotal": 263, "image": "assets/generic-vial-product.png", "status": "Available", "specs": ""}, {"slug": "thymosin-alpha-1", "name": "Thymosin Alpha 1", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "TA1-5", "label": "5MG", "price": 383, "perVial": 38.3}, {"sku": "TA1-10", "label": "10MG", "price": 608, "perVial": 60.8}], "startPerVial": 38.3, "minTotal": 383, "maxTotal": 608, "image": "assets/generic-vial-product.png", "status": "Available", "specs": ""}, {"slug": "snap-8", "name": "Snap-8", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "SNAP10", "label": "10MG", "price": 128, "perVial": 12.8}], "startPerVial": 12.8, "minTotal": 128, "maxTotal": 128, "image": "assets/generic-vial-product.png", "status": "Available", "specs": ""}, {"slug": "ara-290", "name": "ARA 290", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "ARA10", "label": "10MG", "price": 320, "perVial": 32.0}], "startPerVial": 32.0, "minTotal": 320, "maxTotal": 320, "image": "assets/generic-vial-product.png", "status": "Request Availability", "specs": ""}, {"slug": "kpv", "name": "KPV", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "KPV5", "label": "5MG", "price": 161, "perVial": 16.1}, {"sku": "KPV10", "label": "10MG", "price": 224, "perVial": 22.4}], "startPerVial": 16.1, "minTotal": 161, "maxTotal": 224, "image": "assets/kpv-vial.png", "status": "Available", "specs": ""}, {"slug": "selank", "name": "Selank", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "SEL5", "label": "5MG", "price": 146, "perVial": 14.6}, {"sku": "SEL10", "label": "10MG", "price": 218, "perVial": 21.8}], "startPerVial": 14.6, "minTotal": 146, "maxTotal": 218, "image": "assets/selank-vial.png", "status": "Available", "specs": ""}, {"slug": "semax", "name": "Semax", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "SEMAX5", "label": "5MG", "price": 137, "perVial": 13.7}, {"sku": "SEMAX10", "label": "10MG", "price": 203, "perVial": 20.3}], "startPerVial": 13.7, "minTotal": 137, "maxTotal": 203, "image": "assets/semax-vial.png", "status": "Available", "specs": ""}, {"slug": "ss-31", "name": "SS-31", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "SS31-10", "label": "10MG", "price": 338, "perVial": 33.8}, {"sku": "SS31-50", "label": "50MG", "price": 1097, "perVial": 109.7}], "startPerVial": 33.8, "minTotal": 338, "maxTotal": 1097, "image": "assets/ss31-vial.png", "status": "Limited Procurement", "specs": ""}, {"slug": "thymalin", "name": "Thymalin", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "THY10", "label": "10MG", "price": 257, "perVial": 25.7}], "startPerVial": 25.7, "minTotal": 257, "maxTotal": 257, "image": "assets/generic-vial-product.png", "status": "Available", "specs": ""}, {"slug": "kisspeptin", "name": "Kisspeptin", "kind": "Research Peptide", "category": "Research Peptide", "optionLabel": "Dosage Options", "badge": "10 Vials", "options": [{"sku": "KISS5", "label": "5MG", "price": 161, "perVial": 16.1}, {"sku": "KISS10", "label": "10MG", "price": 272, "perVial": 27.2}], "startPerVial": 16.1, "minTotal": 161, "maxTotal": 272, "image": "assets/generic-vial-product.png", "status": "Available", "specs": ""}];
+  const ORDER_NUMBER = "3054491784";
+  const HUMAN_NUMBER = "3053157577";
+  const EMAIL = "Globalpepsorg@gmail.com";
+  const $ = (s,c=document)=>c.querySelector(s);
+  const $$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
+  const money = n => "$" + Number(n || 0).toLocaleString();
+  const range = g => g.minTotal === g.maxTotal ? money(g.minTotal) : `${money(g.minTotal)} – ${money(g.maxTotal)}`;
+  const sms = (phone, body) => "sms:" + phone + "?&body=" + encodeURIComponent(body);
+  const getCart = () => { try { return JSON.parse(localStorage.getItem("peps_cart") || "[]"); } catch(e) { return []; } };
+  const setCart = c => { localStorage.setItem("peps_cart", JSON.stringify(c)); localStorage.setItem("wop_cart", JSON.stringify(c)); };
+
+  function cleanNav() {
+    $$("a").forEach(a => {
+      const t = a.textContent.trim().toLowerCase();
+      const href = a.getAttribute("href") || "";
+      if (t.includes("supplier") || t.includes("sell your own") || t.includes("start your own") || t.includes("start a company") || href.includes("become-supplier") || href.includes("become-wholesaler") || href.includes("start-company")) {
+        if (!a.closest(".footer")) a.remove();
+      }
+    });
+  }
+
+  function statusClass(s) {
+    s = String(s||"").toLowerCase();
+    if (s.includes("limited")) return "limited";
+    if (s.includes("request")) return "request";
+    return "available";
+  }
+
+  function quoteBody(items) {
+    const lines = ["PEPS GLOBAL Research Quote Request","","Please have a procurement representative review this request.","","Quote summary:"];
+    let total = 0;
+    items.forEach(x => {
+      const q = Number(x.qty || 1);
+      const p = Number(x.price || 0);
+      total += p*q;
+      lines.push("- " + x.name + " | " + x.badge + " | " + x.option + " | Qty " + q + " | " + money(p*q));
+    });
+    if (total) lines.push("", "Estimated kit total: " + money(total));
+    lines.push("", "Please confirm availability, applicable COA documentation, shipping, and payment-link instructions.","Research use only. Not for human or veterinary use.");
+    return lines.join("\n");
+  }
+
+  function card(g) {
+    const opts = g.options.map(o => `<span>${o.label}</span>`).join("");
+    return `<article class="v17-card" data-status="${statusClass(g.status)}">
+      <div class="v17-status ${statusClass(g.status)}">${g.status}</div>
+      <a class="v17-img" href="product.html?item=${g.slug}"><img src="${g.image}" alt="${g.name}"></a>
+      <div class="v17-body">
+        <div class="v17-top"><span class="vials-pill">${g.badge}</span><button class="v17-heart" type="button" data-wish="${g.slug}" title="Save to wishlist">♡</button></div>
+        <h3><a href="product.html?item=${g.slug}">${g.name}</a></h3>
+        <p class="v17-kind">${g.kind}</p>
+        <div class="v17-options"><strong>${g.optionLabel}</strong><div>${opts}</div></div>
+        ${g.specs ? `<div class="v17-specs"><strong>Blend Specs</strong><p>${g.specs}</p></div>` : ""}
+        <p class="v17-price"><strong>Starting at $${g.startPerVial.toFixed(2)} / vial</strong><span>Kit Total: ${range(g)}</span></p>
+        <a class="btn outline full" href="product.html?item=${g.slug}">View Options</a>
+      </div>
+    </article>`;
+  }
+
+  function setupControls() {
+    const intro = $(".page-intro");
+    if (intro) {
+      $$(".sort,[data-sort],[data-v15-search],[data-v15-status],[data-v16-search],[data-v16-sort],[data-v16-category],[data-v16-status]").forEach(x=>x.classList.add("v17-hide-old"));
+      if (!$(".v17-controls")) {
+        const div = document.createElement("div");
+        div.className = "v17-controls";
+        const cats = [...new Set(CATALOG_GROUPS.map(g=>g.category))].sort();
+        div.innerHTML = `<input data-v17-search type="search" placeholder="Search product or dosage"><select data-v17-sort><option value="featured">Featured</option><option value="low">Low to High</option><option value="high">High to Low</option></select><select data-v17-category><option value="all">All Categories</option>${cats.map(c=>`<option value="${c}">${c}</option>`).join("")}</select><select data-v17-status><option value="all">All Statuses</option><option value="available">Available</option><option value="limited">Limited Procurement</option><option value="request">Request Availability</option></select>`;
+        intro.appendChild(div);
+      }
+      const h1 = intro.querySelector("h1"); if (h1) h1.textContent = "Research Categories";
+      const p = intro.querySelector("p"); if (p) p.textContent = "One card per product family. Select a category to view 10-vial package options.";
+    }
+    $$("[data-v17-search],[data-v17-sort],[data-v17-category],[data-v17-status]").forEach(el => {
+      ["click","mousedown","mouseup","pointerdown","pointerup"].forEach(ev=>el.addEventListener(ev,e=>e.stopPropagation()));
+      el.addEventListener("input", renderCatalog);
+      el.addEventListener("change", renderCatalog);
+    });
+  }
+
+  function renderCatalog() {
+    const grid = $("[data-product-grid]");
+    if (!grid) return;
+    const q = ($("[data-v17-search]")?.value || "").toLowerCase().trim();
+    const sort = $("[data-v17-sort]")?.value || "featured";
+    const cat = $("[data-v17-category]")?.value || "all";
+    const status = $("[data-v17-status]")?.value || "all";
+    let list = [...CATALOG_GROUPS];
+    if (q) list = list.filter(g => (g.name+" "+g.kind+" "+g.specs+" "+g.options.map(o=>o.sku+" "+o.label).join(" ")).toLowerCase().includes(q));
+    if (cat !== "all") list = list.filter(g => g.category === cat);
+    if (status !== "all") list = list.filter(g => statusClass(g.status) === status);
+    if (sort === "low") list.sort((a,b)=>a.minTotal-b.minTotal);
+    if (sort === "high") list.sort((a,b)=>b.minTotal-a.minTotal);
+    grid.classList.add("v17-grid");
+    grid.innerHTML = list.map(card).join("");
+    const s = $("[data-catalog-status]"); if (s) s.textContent = "Showing " + list.length + " research categories";
+  }
+
+  function renderHome() {
+    const grid = $("[data-home-grid]");
+    if (!grid) return;
+    const home = ["tirzepatide","retatrutide","semaglutide","bpc-157"].map(slug => CATALOG_GROUPS.find(g=>g.slug===slug)).filter(Boolean);
+    grid.classList.add("v17-grid");
+    grid.innerHTML = home.map(card).join("");
+  }
+
+  function setupProduct() {
+    if (!$("[data-product-page]")) return;
+    const slug = new URLSearchParams(location.search).get("item") || "tirzepatide";
+    const g = CATALOG_GROUPS.find(x=>x.slug===slug) || CATALOG_GROUPS[0];
+    let chosen = g.options[0];
+    if ($("[data-product-title]")) $("[data-product-title]").textContent = g.name;
+    if ($("[data-product-breadcrumb]")) $("[data-product-breadcrumb]").textContent = g.name;
+    const img = $("[data-product-image]"); if (img) img.innerHTML = `<img src="${g.image}" alt="${g.name}">`;
+    const row = $(".size-row");
+    const price = $("[data-product-price]");
+    function choose(o) {
+      chosen = o;
+      $$(".size-row .size").forEach(b=>b.classList.toggle("active", b.dataset.sku===o.sku));
+      if (price) price.innerHTML = `${money(o.price)} <small class="per-vial-inline">($${o.perVial.toFixed(2)}/vial)</small>`;
+      let note = $(".selected-size-note");
+      if (!note) { note=document.createElement("p"); note.className="selected-size-note"; row?.insertAdjacentElement("afterend", note); }
+      note.innerHTML = `<strong>${g.badge}</strong> package • <strong>${o.label}</strong> each • <strong>${money(o.price)}</strong> ($${o.perVial.toFixed(2)}/vial)`;
+      let specs = $(".product-blend-specs");
+      if (g.specs && !specs) { specs=document.createElement("div"); specs.className="product-blend-specs"; note.insertAdjacentElement("afterend", specs); }
+      if (specs) specs.innerHTML = g.specs ? `<strong>Blend Specifications</strong><p>${g.specs}</p>` : "";
+      const text = $("[data-text-product]");
+      if (text) { text.textContent = "Send Quote Summary"; text.href=sms(ORDER_NUMBER, quoteBody([{name:g.name,badge:g.badge,option:o.label,price:o.price,qty:1}])); }
+    }
+    if (row) {
+      row.innerHTML = g.options.map((o,i)=>`<button class="size ${i===0?"active":""}" type="button" data-sku="${o.sku}"><span class="size-vials">${g.badge}</span><span class="size-mg">${o.label}</span><small>${money(o.price)} ($${o.perVial.toFixed(2)}/vial)</small></button>`).join("");
+      row.querySelectorAll(".size").forEach((b,i)=>b.onclick=()=>choose(g.options[i]));
+    }
+    choose(chosen);
+    const qty = $("[data-qty]");
+    $$("[data-add-cart],[data-add-quote]").forEach(btn=>btn.onclick=e=>{
+      e.preventDefault();
+      const c = getCart(); c.push({name:g.name,badge:g.badge,option:chosen.label,price:chosen.price,qty:Number(qty?.value||1)||1});
+      setCart(c); renderDrawer(); $(".cart-drawer")?.classList.add("open");
+    });
+  }
+
+  function getCart() { try { return JSON.parse(localStorage.getItem("peps_cart")||"[]"); } catch(e) { return []; } }
+  function setCart(c) { localStorage.setItem("peps_cart",JSON.stringify(c)); localStorage.setItem("wop_cart",JSON.stringify(c)); }
+
+  function renderDrawer() {
+    const drawer = $(".cart-drawer"); if (!drawer) return;
+    const c = getCart();
+    $$(".cart-count").forEach(x=>x.textContent=c.reduce((a,b)=>a+(Number(b.qty)||1),0));
+    const items = $("[data-cart-items]");
+    if (items) items.innerHTML = c.length ? c.map((x,i)=>`<article class="drawer-item-clean"><div class="drawer-item-top"><strong>${x.name}</strong><button type="button" data-v17-remove="${i}">×</button></div><div class="drawer-meta"><span class="drawer-vials">${x.badge||"10 Vials"}</span><span>${x.option}</span><span>Qty: ${x.qty||1}</span><span>${money((x.price||0)*(x.qty||1))}</span></div></article>`).join("") : `<div class="drawer-empty">Your quote list is empty.</div>`;
+    Array.from(drawer.children).forEach(el=>{ if(el.classList?.contains("drawer-actions-v15")||el.classList?.contains("drawer-actions-v16")||el.classList?.contains("drawer-actions-v17"))el.remove(); if(el.matches?.("a.btn"))el.remove(); });
+    const actions=document.createElement("div"); actions.className="drawer-actions-v17";
+    actions.innerHTML = `<a class="btn black full" href="${sms(ORDER_NUMBER, c.length?quoteBody(c):"PEPS GLOBAL Research Quote Request. Please connect me with a procurement representative.")}">Submit Research Quote Request</a><a class="btn outline full" href="${sms(HUMAN_NUMBER,"Hi PEPS GLOBAL, I would like to speak with a procurement agent in English or Spanish.")}">Speak with a Procurement Agent (EN/ES)</a><a class="btn outline full" href="mailto:Globalpepsorg@gmail.com?subject=PEPS%20GLOBAL%20Institutional%20Inquiry">Email Institutional Inquiry</a>`;
+    drawer.appendChild(actions);
+    $$("[data-v17-remove]").forEach(b=>b.onclick=()=>{ const cart=getCart(); cart.splice(Number(b.dataset.v17Remove),1); setCart(cart); renderDrawer(); });
+  }
+
+  function wishlistPopup() {
+    if (localStorage.getItem("pg_quote_popup_seen")) return;
+    setTimeout(()=>{
+      if ($(".quote-popup-v15")) return;
+      const div=document.createElement("div"); div.className="quote-popup-v15";
+      div.innerHTML = `<div class="quote-popup-panel"><button class="quote-x" type="button">×</button><span class="eyebrow">FIRST INSTITUTIONAL QUOTE</span><h3>Request 10% off your first quote.</h3><p>Enter an email so a procurement representative can include the code with quote instructions.</p><input type="email" placeholder="Email address"><a class="btn black full" href="${sms(ORDER_NUMBER,"PEPS GLOBAL quote-code request. Please send institutional quote instructions.")}">Request Quote Code</a><button class="popup-no" type="button">No thanks</button></div>`;
+      document.body.appendChild(div);
+      const close=()=>{localStorage.setItem("pg_quote_popup_seen","1");div.remove();};
+      div.querySelector(".quote-x").onclick=close; div.querySelector(".popup-no").onclick=close;
+    }, 1800);
+  }
+
+  cleanNav();
+  setupControls();
+  renderCatalog();
+  renderHome();
+  setupProduct();
+  renderDrawer();
+  wishlistPopup();
+  document.addEventListener("click",()=>setTimeout(()=>{renderDrawer();cleanNav();},40));
+})();
