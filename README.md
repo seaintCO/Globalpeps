@@ -115,3 +115,7 @@ Updated visuals include BPC-157, GHK-Cu, CJC-1295/Ipamorelin, Wolverine, Glow, M
 - Fixed issue where Featured / Low-to-High / High-to-Low or Category clicks could open the first Bac.water product.
 - Dropdowns now sit above the catalog grid with proper z-index and event handling.
 - Old duplicate dropdowns are hidden.
+
+
+## V20 hyper-real product imagery
+- Replaced catalog/product images for Bac.water, Tirzepatide, Semaglutide, BPC-157, Retatrutide, and Tesamorelin with the new integrated PEPS GLOBAL product photography.
