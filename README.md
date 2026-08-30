@@ -126,3 +126,7 @@ Updated visuals include BPC-157, GHK-Cu, CJC-1295/Ipamorelin, Wolverine, Glow, M
 - Replaced 70MG and 80MG blend images.
 - Replaced IGF-1 LR3, MOTS-c, Epithalon, 5-AMINO-1MQ, AOD9604, and Lemon Bottle images.
 - Added image cache-busting so the live catalog reloads the new product photography.
+
+
+## V22 image refresh
+Replaced remaining catalog images with realistic PEPS GLOBAL vial renders and added v22 cache-busting to product imagery.
