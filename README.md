@@ -130,3 +130,8 @@ Updated visuals include BPC-157, GHK-Cu, CJC-1295/Ipamorelin, Wolverine, Glow, M
 
 ## V22 image refresh
 Replaced remaining catalog images with realistic PEPS GLOBAL vial renders and added v22 cache-busting to product imagery.
+
+## V23
+- Rebuilt the remaining catalog images that still looked pasted-on or unfinished.
+- Replaced: Melanotan II, FOXO4-DRI, L-Carnitine, AHK-CU, Glutathione, Lipo-C, MIC (Lipo-C + B12), VIP, B12, PT141, Thymosin Alpha 1, Snap-8, ARA 290, KPV, Selank, Semax, SS-31, Thymalin / Thymulin, and Kisspeptin.
+- Image cache bumped to v23.
