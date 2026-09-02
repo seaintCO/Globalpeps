@@ -146,3 +146,19 @@ Image cache bumped to v24.
 Added/replaced the next 9 PEPS GLOBAL catalog product images:
 Thymosin Alpha 1, Snap-8, ARA 290, KPV, Selank, Semax, SS-31, Thymalin / Thymulin, and Kisspeptin.
 Image cache bumped to v25.
+
+
+## V26 — DSIP
+Added DSIP as the final grouped catalog product.
+- DS5: 5MG — $176 kit total ($17.60/vial)
+- DS10: 10MG — $305 kit total ($30.50/vial)
+- New PEPS GLOBAL DSIP product image
+- Image/cache version bumped to v26
+
+
+## V27 — DSIP image correction
+- Replaced DSIP image with the corrected hyper-real PEPS GLOBAL vial render.
+- DSIP remains one grouped catalog product:
+  - DS5: 5MG — $176 kit total
+  - DS10: 10MG — $305 kit total
+- Cache version bumped to v27.
