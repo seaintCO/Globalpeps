@@ -175,4 +175,10 @@ Added DSIP as the final grouped catalog product.
 - Wholesale intake form now submits directly to Formspree: https://formspree.io/f/xwlkbgog
 - Added a prominent Wholesale Intake Form callout.
 - Added named wholesale fields for products / kits of interest and business details.
-- Cache version bumped to v30.
+- Cache version bumped to v31.
+
+
+## V31
+- Renamed Thymalin / Thymulin display name to Thymalin.
+- Kept existing slug for backward compatibility.
+- Cache bumped to v31.
