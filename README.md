@@ -156,9 +156,9 @@ Added DSIP as the final grouped catalog product.
 - Image/cache version bumped to v26
 
 
-## V27 — DSIP image correction
+## V28 — DSIP image correction
 - Replaced DSIP image with the corrected hyper-real PEPS GLOBAL vial render.
 - DSIP remains one grouped catalog product:
   - DS5: 5MG — $176 kit total
   - DS10: 10MG — $305 kit total
-- Cache version bumped to v27.
+- Cache version bumped to v28.
