@@ -512,3 +512,14 @@
 
 /* V29 kit/bulk pricing clarity */
 .kit-pricing-notice{margin:14px 0 0;padding:12px 14px;border:1px solid #e5e5e2;border-radius:10px;background:#fafaf8;color:#555;line-height:1.55;font-size:13px}.kit-pricing-notice strong{color:#111}.kit-pricing-notice a{color:#111;text-decoration:underline;text-underline-offset:3px}.detail-price small{display:block;margin-top:5px;color:#777;font-size:13px;font-weight:500}.v19-price span{display:block;line-height:1.45}
+
+
+/* V30 wholesale intake / Formspree emphasis */
+.form-link-callout{margin:0 0 22px;padding:22px;border:2px solid #111;border-radius:14px;background:linear-gradient(180deg,#fff,#f7f7f5);box-shadow:0 14px 32px rgba(0,0,0,.09)}
+.form-link-label{font-size:11px;font-weight:700;letter-spacing:.16em;margin-bottom:9px;color:#555}
+.form-link-callout a{display:block;font-family:'Libre Baskerville',serif;font-size:24px;font-weight:700;line-height:1.25;color:#111;text-decoration:none;margin-bottom:7px}
+.form-link-callout a:after{content:'  →';font-family:'DM Sans',Arial,sans-serif}
+.form-link-callout small{display:block;color:#6d6d6d;line-height:1.55}
+.wholesale-intake-form .wholesale-submit{font-size:13px;padding:16px 20px;box-shadow:0 9px 22px rgba(0,0,0,.13)}
+.wholesale-form-note{font-size:11px;color:#777;text-align:center;margin:10px 0 0}
+@media(max-width:700px){.form-link-callout a{font-size:20px}}

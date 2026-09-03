@@ -169,3 +169,10 @@ Added DSIP as the final grouped catalog product.
 - Per-vial amounts are shown only as an equivalent for reference.
 - Product quantity now means number of kits.
 - Added bulk-order messaging and wholesale CTA.
+
+
+## V30 — Wholesale intake
+- Wholesale intake form now submits directly to Formspree: https://formspree.io/f/xwlkbgog
+- Added a prominent Wholesale Intake Form callout.
+- Added named wholesale fields for products / kits of interest and business details.
+- Cache version bumped to v30.
